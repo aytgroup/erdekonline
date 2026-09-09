@@ -4,6 +4,7 @@ import FeaturedBusinesses from "@/components/FeaturedBusinesses";
 import WhyErDekOnline from "@/components/WhyErDekOnline";
 import BusinessCTA from "@/components/BusinessCTA";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <WhyErDekOnline />
       <BusinessCTA />
       <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

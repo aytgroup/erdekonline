@@ -61,7 +61,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Image
-                src="/logo.svg"
+                src="/logo.png"
                 alt="Erdek Online Logo"
                 width={52}
                 height={52}
@@ -80,7 +80,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
               <Phone size={14} className="text-sky-400 shrink-0" />
-              +90 (266) XXX XX XX
+              +90 (266) 835 00 00
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Mail size={14} className="text-sky-400 shrink-0" />
