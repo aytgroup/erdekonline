@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="250" cy="250" r="235"/>
+    </clipPath>
+  </defs>
+
+  <!-- White fill -->
+  <circle cx="250" cy="250" r="242" fill="white"/>
+
+  <!-- ── SUN RAYS ── -->
+  <g transform="translate(250,175)" fill="#f26522">
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(22.5)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(45)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(67.5)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(90)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(112.5)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(135)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(157.5)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(180)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(202.5)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(225)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(247.5)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(270)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(292.5)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(315)"/>
+    <path d="M0,-90 C-7,-70 -12,-45 -5,-25 C0,-15 5,-25 12,-45 C19,-65 7,-70 0,-90Z" transform="rotate(337.5)"/>
+  </g>
+
+  <!-- Sun center -->
+  <circle cx="250" cy="175" r="46" fill="#f26522"/>
+
+  <!-- ── LOCATION PIN ── -->
+  <path d="M250,125 C225,125 205,145 205,170 C205,202 250,245 250,245 C250,245 295,202 295,170 C295,145 275,125 250,125Z" fill="#e63329"/>
+  <circle cx="250" cy="170" r="15" fill="white"/>
+  <circle cx="250" cy="170" r="6" fill="#e63329"/>
+  <line x1="284" y1="143" x2="293" y2="132" stroke="#e63329" stroke-width="5.5" stroke-linecap="round"/>
+  <line x1="294" y1="157" x2="306" y2="153" stroke="#e63329" stroke-width="5.5" stroke-linecap="round"/>
+
+  <!-- ── WAVES (clipped) ── -->
+  <g clip-path="url(#circleClip)">
+    <path d="M10,272 C55,250 100,272 145,272 C190,272 235,250 280,272 C325,294 370,272 415,272 C445,272 470,262 490,267 L490,305 C470,310 445,298 415,298 C370,298 325,320 280,298 C235,276 190,298 145,298 C100,298 55,320 10,305 Z" fill="#47c8e6"/>
+    <path d="M10,296 C55,274 100,296 145,296 C190,296 235,274 280,296 C325,318 370,296 415,296 C445,296 470,286 490,291 L490,335 C470,340 445,325 415,325 C370,325 325,347 280,325 C235,303 190,325 145,325 C100,325 55,347 10,335 Z" fill="#17b3d4"/>
+  </g>
+
+  <!-- ── OUTER RING ── -->
+  <circle cx="250" cy="250" r="235" fill="none" stroke="#1a3a6b" stroke-width="11"/>
+
+  <!-- ── TEXT (inside circle, snug at bottom) ── -->
+  <text x="250" y="385" font-family="'Arial Black','Arial',sans-serif" font-weight="900" font-size="68" fill="#1a3a6b" text-anchor="middle" letter-spacing="3">ERDEK</text>
+  <text x="250" y="448" font-family="'Arial Black','Arial',sans-serif" font-weight="900" font-size="56" fill="#17b3d4" text-anchor="middle" letter-spacing="7">ONLINE</text>
+</svg>
