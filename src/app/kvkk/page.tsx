@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export default function KvkkPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 flex flex-col">
+      <Navbar />
       <div className="max-w-3xl mx-auto px-4 py-12">
         <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-sky-600 text-sm font-medium mb-8 transition-colors">
           <ArrowLeft size={16} /> Ana Sayfaya Dön
@@ -19,6 +22,7 @@ export default function KvkkPage() {
           <p className="text-gray-600 text-sm leading-relaxed mb-6">KVKK kapsamında kişisel verilerinize erişme, düzeltme, silme ve itiraz etme haklarına sahipsiniz. Başvurularınız için info@erdekonline.com adresine yazabilirsiniz.</p>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

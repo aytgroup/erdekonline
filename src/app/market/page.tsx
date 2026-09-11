@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Clock, Star } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
+export const metadata: Metadata = {
+  title: "Market | ErdekOnline",
+  description: "Erdek'teki marketlerden online alışveriş yapın. Gıda, içecek ve daha fazlası kapınıza gelsin.",
+};
 
 const isletmeler = [
   { id: 3, isim: "Şevket Market", kategori: "Market & Bakkal", puan: 4.6, sure: "15-25 dk", emoji: "🛒", renk: "bg-green-100" },
@@ -8,7 +17,8 @@ const isletmeler = [
 
 export default function MarketPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
       <div className="bg-white border-b border-gray-100 shadow-sm px-4 py-5">
         <div className="max-w-5xl mx-auto flex items-center gap-4">
           <Link href="/" className="text-gray-500 hover:text-sky-600 transition-colors"><ArrowLeft size={22} /></Link>
@@ -46,6 +56,8 @@ export default function MarketPage() {
           </Link>
         </div>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

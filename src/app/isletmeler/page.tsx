@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Star, Clock } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
+export const metadata: Metadata = {
+  title: "Tüm İşletmeler | ErdekOnline",
+  description: "Erdek'teki tüm işletmeleri keşfedin. Restoran, market, otel ve daha fazlası.",
+};
 
 const tumIsletmeler = [
   { id: 1, isim: "Kalamar Balık Restaurant", kategori: "🍽️ Yemek", puan: 4.9, sure: "25-40 dk", emoji: "🐟", renk: "bg-blue-100" },
@@ -12,7 +21,8 @@ const tumIsletmeler = [
 
 export default function IsletmelerPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
       <div className="bg-white border-b border-gray-100 shadow-sm px-4 py-5">
         <div className="max-w-5xl mx-auto flex items-center gap-4">
           <Link href="/" className="text-gray-500 hover:text-sky-600 transition-colors"><ArrowLeft size={22} /></Link>
@@ -50,6 +60,8 @@ export default function IsletmelerPage() {
           </Link>
         </div>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

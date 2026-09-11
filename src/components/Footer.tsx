@@ -17,6 +17,7 @@ const businessLinks = [
   { href: "/fiyatlandirma", label: "Fiyatlandırma" },
   { href: "/isletme-bilgi", label: "Nasıl Çalışır?" },
   { href: "/destek", label: "Destek" },
+  { href: "/hakkimizda", label: "Hakkımızda" },
 ];
 
 const socialLinks = [
@@ -61,7 +62,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="Erdek Online Logo"
                 width={52}
                 height={52}

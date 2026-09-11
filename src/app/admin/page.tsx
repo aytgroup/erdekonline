@@ -6,7 +6,7 @@ import Image from "next/image";
 import { LogOut, RefreshCw, Trash2, Phone, Mail, MapPin, Clock, Tag, User } from "lucide-react";
 import { basvurulariGetir, durumGuncelle, basvuruSil, type Basvuru } from "@/lib/basvurular";
 
-const ADMIN_PIN = "1234";
+const ADMIN_PIN = process.env.NEXT_PUBLIC_ADMIN_PIN || "erdek2026";
 
 const durumRenk: Record<Basvuru["durum"], string> = {
   yeni: "bg-orange-100 text-orange-700 border-orange-200",
@@ -116,7 +116,7 @@ export default function AdminPage() {
       <header className="bg-white border-b border-gray-100 shadow-sm px-4 py-4 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Image src="/logo.png" alt="ErdekOnline" width={40} height={40} className="rounded-full" />
+            <Image src="/logo.svg" alt="ErdekOnline" width={40} height={40} className="rounded-full" />
             <div>
               <h1 className="font-black text-gray-900 text-base leading-none">Admin Paneli</h1>
               <p className="text-xs text-gray-400">İşletme Başvuruları</p>

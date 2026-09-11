@@ -14,8 +14,12 @@ export const metadata: Metadata = {
     "Erdek'in en kapsamlı online platformu. Yemek siparişi, market, yerel işletmeler, konaklama ve çok daha fazlası tek tıkla.",
   keywords: "Erdek, online sipariş, yemek, market, yerel işletmeler, Balıkesir",
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: [
+      { url: "/logo.svg", type: "image/svg+xml" },
+      { url: "/logo.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/logo.png", sizes: "512x512", type: "image/png" }],
+    shortcut: "/logo.svg",
   },
   metadataBase: new URL("https://erdekonline.com"),
   openGraph: {
@@ -25,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "ErdekOnline",
     locale: "tr_TR",
     type: "website",
-    images: [{ url: "/logo.png", width: 512, height: 512, alt: "ErdekOnline Logo" }],
+    images: [{ url: "/logo.png", width: 1254, height: 1254, alt: "ErdekOnline Logo" }],
   },
 };
 

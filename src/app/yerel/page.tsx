@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Star } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
+export const metadata: Metadata = {
+  title: "Yerel Ürünler | ErdekOnline",
+  description: "Erdek'in doğal ve yerel ürünleri. Zeytin, peynir, bal ve daha fazlası.",
+};
 
 const urunler = [
   { id: 6, isim: "Yerel Köy Ürünleri", kategori: "Zeytinyağı & Zeytin", puan: 4.9, emoji: "🫒", renk: "bg-lime-100" },
@@ -10,7 +19,8 @@ const urunler = [
 
 export default function YerelPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
       <div className="bg-white border-b border-gray-100 shadow-sm px-4 py-5">
         <div className="max-w-5xl mx-auto flex items-center gap-4">
           <Link href="/" className="text-gray-500 hover:text-sky-600 transition-colors"><ArrowLeft size={22} /></Link>
@@ -48,6 +58,8 @@ export default function YerelPage() {
           </Link>
         </div>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

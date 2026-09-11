@@ -1,5 +1,14 @@
 import Link from "next/link";
-import { ArrowLeft, CheckCircle, TrendingUp, Users, Star } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "İşletme Bilgileri | ErdekOnline",
+  description: "ErdekOnline'a işletmenizi ekleyin. Ücretsiz başlangıç, ilk 3 ay komisyon sıfır.",
+};
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const steps = [
   { num: "1", title: "Başvurun", desc: "İşletme Ol butonuna tıklayın, 2 dakikada formu doldurun." },
@@ -19,7 +28,8 @@ const faydalar = [
 
 export default function IsletmeBilgiPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-gray-50 flex flex-col">
+      <Navbar />
       <div className="bg-gradient-to-r from-orange-500 to-sky-600 text-white py-16 px-4 text-center">
         <h1 className="text-4xl font-black mb-4">İşletmenizi Büyütün</h1>
         <p className="text-white/80 text-lg max-w-xl mx-auto mb-8">Erdek&apos;teki binlerce müşteriye ErdekOnline üzerinden ulaşın.</p>
@@ -55,6 +65,8 @@ export default function IsletmeBilgiPage() {
           <p className="text-gray-400 text-sm mt-3">İlk 3 ay komisyon sıfır · Kurulum ücretsiz</p>
         </div>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

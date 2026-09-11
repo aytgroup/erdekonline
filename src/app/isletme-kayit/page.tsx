@@ -166,7 +166,7 @@ export default function IsletmeKayitPage() {
           <ArrowLeft size={16} /> Ana Sayfaya Dön
         </Link>
         <div className="bg-gradient-to-r from-orange-500 to-sky-600 rounded-3xl p-8 text-center mb-6 text-white">
-          <Image src="/logo.png" alt="ErdekOnline" width={64} height={64} className="mx-auto rounded-full mb-3" priority />
+          <Image src="/logo.svg" alt="ErdekOnline" width={64} height={64} className="mx-auto rounded-full mb-3" priority />
           <h1 className="text-2xl font-black mb-1">İşletmenizi ErdekOnline&apos;a Ekleyin</h1>
           <p className="text-white/80 text-sm">Erdek&apos;teki müşterilere ulaşın. İlk 3 ay komisyon sıfır!</p>
         </div>

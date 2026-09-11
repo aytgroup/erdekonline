@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { ArrowLeft, Check } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Fiyatlandırma | ErdekOnline",
+  description: "ErdekOnline işletme paketleri ve fiyatları. Ücretsiz başlangıç, Standart ve Premium planlar.",
+};
 
 const planlar = [
   {
@@ -31,7 +40,8 @@ const planlar = [
 
 export default function FiyatlandirmaPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
       <div className="max-w-5xl mx-auto px-4 py-16">
         <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-sky-600 text-sm font-medium mb-10 transition-colors">
           <ArrowLeft size={16} /> Ana Sayfaya Dön
@@ -67,6 +77,8 @@ export default function FiyatlandirmaPage() {
         </div>
         <p className="text-center text-gray-400 text-sm mt-8">Sorularınız için <a href="mailto:info@erdekonline.com" className="text-sky-600 hover:underline">info@erdekonline.com</a></p>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

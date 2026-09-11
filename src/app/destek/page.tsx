@@ -1,9 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { ArrowLeft, Phone, Mail, MessageCircle, Clock } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Destek Merkezi | ErdekOnline",
+  description: "ErdekOnline destek merkezi. WhatsApp, telefon ve e-posta ile 7/24 yardım.",
+};
 
 export default function DestekPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
       <div className="max-w-3xl mx-auto px-4 py-12">
         <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-sky-600 text-sm font-medium mb-8 transition-colors">
           <ArrowLeft size={16} /> Ana Sayfaya Dön
@@ -59,6 +69,8 @@ export default function DestekPage() {
           </div>
         </div>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Star, Users } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
+export const metadata: Metadata = {
+  title: "Tekne Turları | ErdekOnline",
+  description: "Erdek'te tekne turu rezervasyonu yapın. Günlük turlar, ada gezileri ve gün batımı turları.",
+};
 
 const turlar = [
   { id: 10, isim: "Erdek Mavi Tur", kategori: "Günlük Tekne Turu", puan: 4.9, kapasite: "12 kişi", emoji: "⛵", renk: "bg-blue-100", sure: "Tam Gün" },
@@ -9,7 +18,8 @@ const turlar = [
 
 export default function TeknePage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
       <div className="bg-white border-b border-gray-100 shadow-sm px-4 py-5">
         <div className="max-w-5xl mx-auto flex items-center gap-4">
           <Link href="/" className="text-gray-500 hover:text-sky-600 transition-colors"><ArrowLeft size={22} /></Link>
@@ -25,7 +35,7 @@ export default function TeknePage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {turlar.map((b) => (
-            <div key={b.id} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all group cursor-pointer">
+            <Link key={b.id} href={`/isletme/${b.id}`} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all group cursor-pointer">
               <div className={`h-44 ${b.renk} flex items-center justify-center`}>
                 <span className="text-7xl group-hover:scale-110 transition-transform">{b.emoji}</span>
               </div>
@@ -38,7 +48,7 @@ export default function TeknePage() {
                   <div className="font-medium text-sky-600">{b.sure}</div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div className="mt-12 bg-sky-50 border border-sky-100 rounded-2xl p-8 text-center">
@@ -50,6 +60,8 @@ export default function TeknePage() {
           </Link>
         </div>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

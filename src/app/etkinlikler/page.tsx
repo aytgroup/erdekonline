@@ -1,5 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
+export const metadata: Metadata = {
+  title: "Etkinlikler | ErdekOnline",
+  description: "Erdek'teki festival, fuar ve etkinlikler. Deniz festivali, zeytinyağı günleri ve daha fazlası.",
+};
 
 const etkinlikler = [
   { id: 1, baslik: "Erdek Deniz Festivali", tarih: "15 Temmuz 2026", konum: "Erdek Limanı", emoji: "🎭", renk: "bg-blue-100", kategori: "Festival" },
@@ -9,7 +18,8 @@ const etkinlikler = [
 
 export default function EtkinliklerPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="flex flex-col min-h-screen bg-gray-50">
+      <Navbar />
       <div className="bg-white border-b border-gray-100 shadow-sm px-4 py-5">
         <div className="max-w-5xl mx-auto flex items-center gap-4">
           <Link href="/" className="text-gray-500 hover:text-sky-600 transition-colors"><ArrowLeft size={22} /></Link>
@@ -44,6 +54,8 @@ export default function EtkinliklerPage() {
           </a>
         </div>
       </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }
