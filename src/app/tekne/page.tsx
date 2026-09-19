@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Star, Users, Clock, Phone } from "lucide-react";
+import { ArrowLeft, Star, Users, Clock, Phone, Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { useToast } from "@/components/Toast";
 
 const turlar = [
   { id: 10, isim: "Erdek Mavi Tur", kat: "Tam Gün", puan: 4.9, kapasite: "12 kişi", emoji: "⛵", renk: "bg-blue-100", sure: "Tam Gün", fiyat: "₺850/kişi", telefon: "+90 266 835 00 10" },
@@ -17,7 +18,24 @@ const kategoriler = ["Tümü", "Tam Gün", "Yarım Gün", "Akşam"];
 
 export default function TeknePage() {
   const [aktif, setAktif] = useState("Tümü");
+  const [favoriler, setFavoriler] = useState<string[]>([]);
+  const { goster, ToastContainer } = useToast();
   const liste = turlar.filter(t => aktif === "Tümü" || t.kat === aktif);
+
+  useEffect(() => {
+    try { const raw = localStorage.getItem("eo_favoriler"); setFavoriler(raw ? JSON.parse(raw) : []); }
+    catch { setFavoriler([]); }
+  }, []);
+
+  function favoriToggle(e: React.MouseEvent, id: number) {
+    e.preventDefault(); e.stopPropagation();
+    const sid = String(id);
+    const eklendi = !favoriler.includes(sid);
+    const yeni = eklendi ? [...favoriler, sid] : favoriler.filter(f => f !== sid);
+    setFavoriler(yeni);
+    localStorage.setItem("eo_favoriler", JSON.stringify(yeni));
+    goster(eklendi ? "❤️ Favorilere eklendi!" : "Favorilerden kaldırıldı", eklendi ? "success" : "info");
+  }
 
   return (
     <main className="flex flex-col min-h-screen bg-gray-50">
@@ -50,7 +68,11 @@ export default function TeknePage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {liste.map((b) => (
-            <div key={b.id} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all group">
+            <div key={b.id} className="relative bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all group">
+              <button onClick={(e) => favoriToggle(e, b.id)}
+                className="absolute top-3 right-3 z-10 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition-colors">
+                <Heart size={16} className={favoriler.includes(String(b.id)) ? "fill-red-500 text-red-500" : "text-gray-400"} />
+              </button>
               <Link href={`/isletme/${b.id}`}>
                 <div className={`h-44 ${b.renk} flex items-center justify-center relative`}>
                   <span className="text-7xl group-hover:scale-110 transition-transform">{b.emoji}</span>
@@ -89,6 +111,7 @@ export default function TeknePage() {
           </Link>
         </div>
       </div>
+      {ToastContainer}
       <Footer />
       <WhatsAppButton />
     </main>

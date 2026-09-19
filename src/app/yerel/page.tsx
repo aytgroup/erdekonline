@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Star, Leaf } from "lucide-react";
+import { ArrowLeft, Star, Leaf, Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { useToast } from "@/components/Toast";
 
 const urunler = [
   { id: 6, isim: "Yerel Köy Ürünleri", kat: "Zeytin", puan: 4.9, emoji: "🫒", renk: "bg-lime-100", organik: true, etiket: "Zeytinyağı & Zeytin" },
@@ -19,6 +20,23 @@ const kategoriler = ["Tümü", "Zeytin", "Balık", "Peynir", "Bal"];
 export default function YerelPage() {
   const [aktif, setAktif] = useState("Tümü");
   const [sadaceOrganik, setSadaceOrganik] = useState(false);
+  const [favoriler, setFavoriler] = useState<string[]>([]);
+  const { goster, ToastContainer } = useToast();
+
+  useEffect(() => {
+    try { const raw = localStorage.getItem("eo_favoriler"); setFavoriler(raw ? JSON.parse(raw) : []); }
+    catch { setFavoriler([]); }
+  }, []);
+
+  function favoriToggle(e: React.MouseEvent, id: number) {
+    e.preventDefault(); e.stopPropagation();
+    const sid = String(id);
+    const eklendi = !favoriler.includes(sid);
+    const yeni = eklendi ? [...favoriler, sid] : favoriler.filter(f => f !== sid);
+    setFavoriler(yeni);
+    localStorage.setItem("eo_favoriler", JSON.stringify(yeni));
+    goster(eklendi ? "❤️ Favorilere eklendi!" : "Favorilerden kaldırıldı", eklendi ? "success" : "info");
+  }
 
   const liste = urunler
     .filter(b => aktif === "Tümü" || b.kat === aktif)
@@ -67,8 +85,13 @@ export default function YerelPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {liste.map((b) => (
-              <Link key={b.id} href={`/isletme/${b.id}`}
-                className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all group">
+              <div key={b.id} className="relative">
+                <button onClick={(e) => favoriToggle(e, b.id)}
+                  className="absolute top-3 right-3 z-10 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition-colors">
+                  <Heart size={16} className={favoriler.includes(String(b.id)) ? "fill-red-500 text-red-500" : "text-gray-400"} />
+                </button>
+                <Link href={`/isletme/${b.id}`}
+                className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all group block">
                 <div className={`h-44 ${b.renk} flex items-center justify-center relative`}>
                   <span className="text-7xl group-hover:scale-110 transition-transform">{b.emoji}</span>
                   {b.organik && (
@@ -91,6 +114,7 @@ export default function YerelPage() {
                   </div>
                 </div>
               </Link>
+              </div>
             ))}
           </div>
         )}
@@ -104,6 +128,7 @@ export default function YerelPage() {
           </Link>
         </div>
       </div>
+      {ToastContainer}
       <Footer />
       <WhatsAppButton />
     </main>

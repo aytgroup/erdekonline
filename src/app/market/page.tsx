@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, Clock, Star, Search } from "lucide-react";
+import { ArrowLeft, Clock, Star, Search, Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { useToast } from "@/components/Toast";
 
 const isletmeler = [
   { id: 3, isim: "Şevket Market", kat: "Market", puan: 4.6, sure: "15-25 dk", emoji: "🛒", renk: "bg-green-100", acik: true, minSiparis: "50₺" },
@@ -25,6 +26,23 @@ const populerUrunler = [
 
 export default function MarketPage() {
   const [arama, setArama] = useState("");
+  const [favoriler, setFavoriler] = useState<string[]>([]);
+  const { goster, ToastContainer } = useToast();
+
+  useEffect(() => {
+    try { const raw = localStorage.getItem("eo_favoriler"); setFavoriler(raw ? JSON.parse(raw) : []); }
+    catch { setFavoriler([]); }
+  }, []);
+
+  function favoriToggle(e: React.MouseEvent, id: number) {
+    e.preventDefault(); e.stopPropagation();
+    const sid = String(id);
+    const eklendi = !favoriler.includes(sid);
+    const yeni = eklendi ? [...favoriler, sid] : favoriler.filter(f => f !== sid);
+    setFavoriler(yeni);
+    localStorage.setItem("eo_favoriler", JSON.stringify(yeni));
+    goster(eklendi ? "❤️ Favorilere eklendi!" : "Favorilerden kaldırıldı", eklendi ? "success" : "info");
+  }
 
   const liste = isletmeler.filter(b =>
     b.isim.toLowerCase().includes(arama.toLowerCase()) ||
@@ -53,24 +71,30 @@ export default function MarketPage() {
         {/* Marketler */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {liste.map((b) => (
-            <Link key={b.id} href={`/isletme/${b.id}`}
-              className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all group">
-              <div className={`h-40 ${b.renk} flex items-center justify-center relative`}>
-                <span className="text-7xl group-hover:scale-110 transition-transform">{b.emoji}</span>
-                {b.acik && (
-                  <span className="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">● Açık</span>
-                )}
-                <span className="absolute bottom-2 right-2 bg-white/90 text-gray-700 text-xs font-bold px-2 py-0.5 rounded-full">Min. {b.minSiparis}</span>
-              </div>
-              <div className="p-5">
-                <span className="text-xs font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full">{b.kat}</span>
-                <h3 className="font-bold text-gray-900 text-base mt-2 mb-1 group-hover:text-sky-600 transition-colors">{b.isim}</h3>
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <div className="flex items-center gap-1"><Star size={14} className="text-yellow-400 fill-yellow-400" /><span className="font-bold text-gray-700">{b.puan}</span></div>
-                  <div className="flex items-center gap-1"><Clock size={14} />{b.sure}</div>
+            <div key={b.id} className="relative">
+              <button onClick={(e) => favoriToggle(e, b.id)}
+                className="absolute top-3 right-3 z-10 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition-colors">
+                <Heart size={16} className={favoriler.includes(String(b.id)) ? "fill-red-500 text-red-500" : "text-gray-400"} />
+              </button>
+              <Link href={`/isletme/${b.id}`}
+                className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all group block">
+                <div className={`h-40 ${b.renk} flex items-center justify-center relative`}>
+                  <span className="text-7xl group-hover:scale-110 transition-transform">{b.emoji}</span>
+                  {b.acik && (
+                    <span className="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded-full">● Açık</span>
+                  )}
+                  <span className="absolute bottom-2 right-2 bg-white/90 text-gray-700 text-xs font-bold px-2 py-0.5 rounded-full">Min. {b.minSiparis}</span>
                 </div>
-              </div>
-            </Link>
+                <div className="p-5">
+                  <span className="text-xs font-semibold text-green-700 bg-green-50 px-2 py-0.5 rounded-full">{b.kat}</span>
+                  <h3 className="font-bold text-gray-900 text-base mt-2 mb-1 group-hover:text-sky-600 transition-colors">{b.isim}</h3>
+                  <div className="flex items-center justify-between text-sm text-gray-500">
+                    <div className="flex items-center gap-1"><Star size={14} className="text-yellow-400 fill-yellow-400" /><span className="font-bold text-gray-700">{b.puan}</span></div>
+                    <div className="flex items-center gap-1"><Clock size={14} />{b.sure}</div>
+                  </div>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
 
@@ -98,6 +122,7 @@ export default function MarketPage() {
           </Link>
         </div>
       </div>
+      {ToastContainer}
       <Footer />
       <WhatsAppButton />
     </main>
