@@ -1,8 +1,8 @@
 import ScrollToTop from "@/components/ScrollToTop";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -55,15 +55,9 @@ export default function RootLayout({
     <html lang="tr" className={`${inter.variable} h-full`}>
       <head />
       <body className="min-h-full flex flex-col bg-gray-50 antialiased">
+        <GoogleAnalytics />
         {children}
         <ScrollToTop />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-80P45WTK19"
-          strategy="afterInteractive"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-80P45WTK19');`}
-        </Script>
       </body>
     </html>
   );
