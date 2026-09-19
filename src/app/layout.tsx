@@ -1,5 +1,6 @@
 import ScrollToTop from "@/components/ScrollToTop";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
+import GoogleAnalytics, { GaPageView } from "@/components/GoogleAnalytics";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -54,6 +55,7 @@ export default function RootLayout({
     <html lang="tr" className={`${inter.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-gray-50 antialiased">
         <GoogleAnalytics />
+        <Suspense fallback={null}><GaPageView /></Suspense>
         {children}
         <ScrollToTop />
       </body>
