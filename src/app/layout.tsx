@@ -52,7 +52,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr" className={`${inter.variable} h-full`}>
-      <head>
+      <head />
+      <body className="min-h-full flex flex-col bg-gray-50 antialiased">
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -64,8 +65,6 @@ export default function RootLayout({
           }}
         />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-80P45WTK19" />
-      </head>
-      <body className="min-h-full flex flex-col bg-gray-50 antialiased">
         {children}
         <ScrollToTop />
       </body>
