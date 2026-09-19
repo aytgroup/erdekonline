@@ -1,14 +1,13 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const metadata: Metadata = {
   title: "İşletme Bilgileri | ErdekOnline",
   description: "ErdekOnline'a işletmenizi ekleyin. Ücretsiz başlangıç, ilk 3 ay komisyon sıfır.",
 };
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 
 const steps = [
   { num: "1", title: "Başvurun", desc: "İşletme Ol butonuna tıklayın, 2 dakikada formu doldurun." },

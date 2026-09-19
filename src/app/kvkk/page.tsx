@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+
+export const metadata: Metadata = {
+  title: "KVKK Aydınlatma Metni | ErdekOnline",
+  description: "ErdekOnline KVKK aydınlatma metni. 6698 Sayılı Kişisel Verilerin Korunması Kanunu kapsamında haklarınız.",
+};
 
 export default function KvkkPage() {
   return (
@@ -23,6 +30,7 @@ export default function KvkkPage() {
         </div>
       </div>
       <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

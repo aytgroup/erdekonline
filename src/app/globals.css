@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Scrollbar gizleme (kategori filtreleri için) */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
 html {
   scroll-behavior: smooth;
 }

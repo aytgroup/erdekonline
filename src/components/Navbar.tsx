@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ShoppingCart, User, ChevronDown, LogOut } from "lucide-react";
+import { Menu, X, ShoppingCart, User, ChevronDown, LogOut, Search } from "lucide-react";
 
 const categories = [
   { href: "/yemek", label: "🍽️ Yemek" },
@@ -27,6 +27,10 @@ export default function Navbar() {
   const [kullanici, setKullanici] = useState<Kullanici | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [sepetAdet, setSepetAdet] = useState(0);
+  const [aramaAcik, setAramaAcik] = useState(false);
+  const [aramaQ, setAramaQ] = useState("");
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const catMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function checkUser() {
@@ -56,6 +60,20 @@ export default function Navbar() {
       window.removeEventListener("storage", checkSepet);
       window.removeEventListener("eo_sepet_guncellendi", checkSepet);
     };
+  }, []);
+
+  // Dışarı tıklayınca dropdown'ları kapat
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+      if (catMenuRef.current && !catMenuRef.current.contains(e.target as Node)) {
+        setCatOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   function cikisYap() {
@@ -91,8 +109,24 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Kategori menüsü – masaüstü */}
-        <div className="hidden md:flex items-center relative">
+        {/* Hızlı Arama – masaüstü */}
+          {aramaAcik ? (
+            <form onSubmit={e => { e.preventDefault(); if (aramaQ.trim()) { router.push(`/ara?q=${encodeURIComponent(aramaQ.trim())}`); setAramaAcik(false); setAramaQ(""); }}}
+              className="hidden md:flex items-center bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 gap-2 focus-within:border-sky-400 transition-colors">
+              <Search size={15} className="text-gray-400 shrink-0" />
+              <input autoFocus type="text" value={aramaQ} onChange={e => setAramaQ(e.target.value)}
+                placeholder="İşletme ara..." className="outline-none text-sm bg-transparent text-gray-800 placeholder-gray-400 w-40" />
+              <button type="button" onClick={() => { setAramaAcik(false); setAramaQ(""); }} className="text-gray-400 hover:text-gray-600"><X size={14} /></button>
+            </form>
+          ) : (
+            <button onClick={() => setAramaAcik(true)}
+              className="hidden md:flex items-center justify-center w-9 h-9 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-sky-600 transition-colors">
+              <Search size={18} />
+            </button>
+          )}
+
+          {/* Kategori menüsü – masaüstü */}
+        <div className="hidden md:flex items-center relative" ref={catMenuRef}>
           <button onClick={() => setCatOpen(!catOpen)}
             className="flex items-center gap-1.5 text-gray-700 font-semibold text-sm px-4 py-2 rounded-full border border-gray-200 hover:border-sky-300 hover:text-sky-600 transition-colors">
             <span>Kategoriler</span>
@@ -119,7 +153,7 @@ export default function Navbar() {
           </Link>
 
           {kullanici ? (
-            <div className="relative">
+            <div className="relative" ref={userMenuRef}>
               <button onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-sky-600 transition-colors border border-gray-200 px-4 py-2 rounded-full hover:border-sky-300">
                 <User size={16} />
@@ -139,6 +173,14 @@ export default function Navbar() {
                   <Link href="/sepet" onClick={() => setUserMenuOpen(false)}
                     className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium">
                     <ShoppingCart size={15} /> Sepetim
+                  </Link>
+                  <Link href="/siparisler" onClick={() => setUserMenuOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+                    🛍️ <span>Siparişlerim</span>
+                  </Link>
+                  <Link href="/favoriler" onClick={() => setUserMenuOpen(false)}
+                    className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+                    ❤️ <span>Favorilerim</span>
                   </Link>
                   <button onClick={cikisYap}
                     className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors font-medium border-t border-gray-100 mt-1">
@@ -184,6 +226,12 @@ export default function Navbar() {
                 </div>
                 <Link href="/profil" className="flex items-center gap-3 text-gray-700 font-semibold text-sm px-3 py-2.5 rounded-xl hover:bg-gray-50" onClick={() => setMobileOpen(false)}>
                   <User size={18} /> Profilim
+                </Link>
+                <Link href="/siparisler" className="flex items-center gap-3 text-gray-700 font-semibold text-sm px-3 py-2.5 rounded-xl hover:bg-gray-50" onClick={() => setMobileOpen(false)}>
+                  🛍️ <span>Siparişlerim</span>
+                </Link>
+                <Link href="/favoriler" className="flex items-center gap-3 text-gray-700 font-semibold text-sm px-3 py-2.5 rounded-xl hover:bg-gray-50" onClick={() => setMobileOpen(false)}>
+                  ❤️ <span>Favorilerim</span>
                 </Link>
                 <button onClick={() => { cikisYap(); setMobileOpen(false); }}
                   className="flex items-center gap-3 text-red-500 font-semibold text-sm px-3 py-2.5 rounded-xl hover:bg-red-50">

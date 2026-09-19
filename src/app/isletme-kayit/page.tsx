@@ -5,6 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Building2, Phone, Mail, MapPin, ChevronDown } from "lucide-react";
 import { basvuruKaydet } from "@/lib/basvurular";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const cats = [
   "Restoran / Kafe", "Market / Bakkal", "Tekne Turu",
@@ -160,7 +163,9 @@ export default function IsletmeKayitPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-orange-50 to-sky-50 px-4 py-12">
+    <main className="min-h-screen bg-gradient-to-br from-orange-50 to-sky-50 flex flex-col">
+      <Navbar />
+      <div className="flex-1 px-4 py-12">
       <div className="max-w-2xl mx-auto">
         <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-sky-600 text-sm font-medium mb-6 transition-colors">
           <ArrowLeft size={16} /> Ana Sayfaya Dön
@@ -187,6 +192,9 @@ export default function IsletmeKayitPage() {
           {step === 3 && <Step3 isletmeAdi={form.current.isletmeAdi} />}
         </div>
       </div>
+      </div>
+      <Footer />
+      <WhatsAppButton />
     </main>
   );
 }

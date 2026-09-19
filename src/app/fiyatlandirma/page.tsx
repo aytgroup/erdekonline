@@ -42,7 +42,7 @@ export default function FiyatlandirmaPage() {
   return (
     <main className="flex flex-col min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-5xl mx-auto px-4 py-16">
+      <div className="flex-1 max-w-5xl mx-auto px-4 py-16 w-full">
         <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-sky-600 text-sm font-medium mb-10 transition-colors">
           <ArrowLeft size={16} /> Ana Sayfaya Dön
         </Link>
@@ -76,6 +76,71 @@ export default function FiyatlandirmaPage() {
           ))}
         </div>
         <p className="text-center text-gray-400 text-sm mt-8">Sorularınız için <a href="mailto:info@erdekonline.com" className="text-sky-600 hover:underline">info@erdekonline.com</a></p>
+
+        {/* Karşılaştırma Tablosu */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-black text-gray-900 text-center mb-8">Özellik Karşılaştırması</h2>
+          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-100">
+                  <th className="text-left px-6 py-4 text-gray-500 font-semibold w-1/2">Özellik</th>
+                  <th className="text-center px-4 py-4 text-gray-700 font-black">Başlangıç</th>
+                  <th className="text-center px-4 py-4 text-orange-600 font-black bg-orange-50">Standart</th>
+                  <th className="text-center px-4 py-4 text-sky-700 font-black">Premium</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["İşletme Profil Sayfası", true, true, true],
+                  ["Müşteri Yorumları", true, true, true],
+                  ["ErdekOnline Levhası", true, true, true],
+                  ["Online Sipariş Alma", false, true, true],
+                  ["Temel İstatistikler", true, true, true],
+                  ["Detaylı Analitik", false, true, true],
+                  ["Sosyal Medya Tanıtımı", false, true, true],
+                  ["Öne Çıkan Listeleme", false, false, true],
+                  ["Reklam Kampanyaları", false, false, true],
+                  ["Komisyon Oranı", "Yok", "%8", "%5"],
+                  ["Destek", "E-posta", "Öncelikli", "7/24 Telefon"],
+                  ["Özel Hesap Yöneticisi", false, false, true],
+                ].map(([ozellik, baslangic, standart, premium], i) => (
+                  <tr key={i} className={`border-b border-gray-50 ${i % 2 === 0 ? "" : "bg-gray-50/50"}`}>
+                    <td className="px-6 py-3.5 text-gray-700 font-medium">{ozellik}</td>
+                    {[baslangic, standart, premium].map((val, j) => (
+                      <td key={j} className={`text-center px-4 py-3.5 ${j === 1 ? "bg-orange-50/50" : ""}`}>
+                        {typeof val === "boolean" ? (
+                          val
+                            ? <span className="text-green-500 font-bold text-base">✓</span>
+                            : <span className="text-gray-300 font-bold text-base">–</span>
+                        ) : (
+                          <span className="font-semibold text-gray-800">{val}</span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* SSS */}
+        <div className="mt-12 bg-sky-50 border border-sky-100 rounded-2xl p-8">
+          <h2 className="font-black text-gray-900 text-xl mb-6 text-center">Sıkça Sorulan Sorular</h2>
+          <div className="space-y-4 max-w-2xl mx-auto">
+            {[
+              { s: "İlk 3 ay ücretsiz mi gerçekten?", c: "Evet! Başlangıç paketi ilk 3 ay tamamen ücretsizdir. Kredi kartı gerekmez." },
+              { s: "Komisyon nasıl hesaplanır?", c: "Komisyon yalnızca platform üzerinden gelen siparişlerden alınır. Doğrudan aramalardan komisyon alınmaz." },
+              { s: "İstediğim zaman iptal edebilir miyim?", c: "Evet, herhangi bir aylık dönem sonunda herhangi bir ceza olmadan iptal edebilirsiniz." },
+            ].map(({ s, c }) => (
+              <div key={s} className="bg-white rounded-xl p-5 border border-sky-100">
+                <p className="font-bold text-gray-900 mb-2">❓ {s}</p>
+                <p className="text-gray-500 text-sm">{c}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <Footer />
       <WhatsAppButton />

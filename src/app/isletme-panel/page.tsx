@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LogOut, Store, Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle, Package } from "lucide-react";
+import { LogOut, Store, Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle, Package, BarChart3, Users, Star } from "lucide-react";
+import Footer from "@/components/Footer";
 
 interface AktifIsletme {
   isletmeAdi: string; kategori: string; aciklama: string;
@@ -84,6 +85,22 @@ export default function IsletmePanelPage() {
             <div className="flex items-start gap-3 text-gray-600"><MapPin size={15} className="text-sky-400 shrink-0 mt-0.5" /><span>{isletme.adres}</span></div>
           </div>
         </div>
+        {/* İstatistik Kartları */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {[
+            { icon: <Users size={20} className="text-sky-500" />, label: "Bu Ay Görüntülenme", value: "—", bg: "bg-sky-50" },
+            { icon: <Package size={20} className="text-orange-500" />, label: "Toplam Sipariş", value: "0", bg: "bg-orange-50" },
+            { icon: <Star size={20} className="text-yellow-500" />, label: "Ortalama Puan", value: "—", bg: "bg-yellow-50" },
+            { icon: <BarChart3 size={20} className="text-green-500" />, label: "Toplam Kazanç", value: "—₺", bg: "bg-green-50" },
+          ].map((s, i) => (
+            <div key={i} className={`${s.bg} rounded-2xl p-5 flex flex-col gap-2`}>
+              {s.icon}
+              <p className="text-2xl font-black text-gray-900">{s.value}</p>
+              <p className="text-xs text-gray-500 font-medium">{s.label}</p>
+            </div>
+          ))}
+        </div>
+
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <div className="flex items-center gap-2 mb-4"><Package size={20} className="text-orange-500" /><h2 className="font-black text-gray-900 text-lg">Siparişler</h2></div>
           <div className="text-center py-10">
@@ -94,6 +111,7 @@ export default function IsletmePanelPage() {
         </div>
         <div className="text-center"><Link href="/" className="text-sm text-gray-400 hover:text-sky-600 transition-colors">← Ana Sayfaya Dön</Link></div>
       </div>
+      <Footer />
     </main>
   );
 }

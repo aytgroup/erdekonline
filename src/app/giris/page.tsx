@@ -47,6 +47,7 @@ function GirisForm({ showPass, setShowPass }: { showPass: boolean; setShowPass: 
       const kullanici = liste.find((k) => k.email === email && k.sifre === sifre);
       if (kullanici) {
         localStorage.setItem("eo_aktif_kullanici", JSON.stringify(kullanici));
+        window.dispatchEvent(new Event("storage"));
         router.push("/");
       } else {
         setHata("E-posta veya şifre hatalı. Lütfen tekrar deneyin.");
@@ -83,7 +84,7 @@ function GirisForm({ showPass, setShowPass }: { showPass: boolean; setShowPass: 
         <label className="flex items-center gap-2 text-gray-600 cursor-pointer">
           <input type="checkbox" className="rounded" /> Beni hatırla
         </label>
-        <span className="text-sky-600 font-medium text-xs">Şifremi unuttum</span>
+        <Link href="/destek" className="text-sky-600 hover:underline font-medium text-xs">Şifremi unuttum?</Link>
       </div>
       <button type="submit" disabled={yukleniyor}
         className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold py-3.5 rounded-xl transition-colors mt-2 text-base">

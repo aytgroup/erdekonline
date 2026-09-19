@@ -3,12 +3,14 @@ import Image from "next/image";
 import { MapPin, Phone, Mail } from "lucide-react";
 
 const platformLinks = [
-  { href: "/yemek", label: "Yemek Siparişi" },
-  { href: "/market", label: "Market" },
-  { href: "/tekne", label: "Tekne Turları" },
-  { href: "/konaklama", label: "Konaklama" },
-  { href: "/yerel", label: "Yerel Ürünler" },
-  { href: "/etkinlikler", label: "Etkinlikler" },
+  { href: "/yemek", label: "🍽️ Yemek Siparişi" },
+  { href: "/market", label: "🛒 Market" },
+  { href: "/tekne", label: "⛵ Tekne Turları" },
+  { href: "/konaklama", label: "🏨 Konaklama" },
+  { href: "/yerel", label: "🐟 Yerel Ürünler" },
+  { href: "/hizmetler", label: "💈 Hizmetler" },
+  { href: "/etkinlikler", label: "🎭 Etkinlikler" },
+  { href: "/isletmeler", label: "🏪 Tüm İşletmeler" },
 ];
 
 const businessLinks = [
@@ -22,7 +24,7 @@ const businessLinks = [
 
 const socialLinks = [
   {
-    href: "#",
+    href: "https://www.instagram.com/erdekonline/",
     label: "Instagram",
     svg: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -33,7 +35,7 @@ const socialLinks = [
     ),
   },
   {
-    href: "#",
+    href: "https://www.facebook.com/erdekonline",
     label: "Facebook",
     svg: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -42,7 +44,7 @@ const socialLinks = [
     ),
   },
   {
-    href: "#",
+    href: "https://twitter.com/erdekonline",
     label: "X (Twitter)",
     svg: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
@@ -81,11 +83,11 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
               <Phone size={14} className="text-sky-400 shrink-0" />
-              +90 (266) 835 00 00
+              <a href="tel:+902668350000" className="hover:text-sky-400 transition-colors">+90 (266) 835 00 00</a>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Mail size={14} className="text-sky-400 shrink-0" />
-              info@erdekonline.com
+              <a href="mailto:info@erdekonline.com" className="hover:text-sky-400 transition-colors">info@erdekonline.com</a>
             </div>
           </div>
 

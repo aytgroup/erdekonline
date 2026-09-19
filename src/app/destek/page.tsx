@@ -1,14 +1,42 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { ArrowLeft, Phone, Mail, MessageCircle, Clock } from "lucide-react";
+import { ArrowLeft, Phone, Mail, MessageCircle, Clock, ChevronDown } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Destek Merkezi | ErdekOnline",
-  description: "ErdekOnline destek merkezi. WhatsApp, telefon ve e-posta ile 7/24 yardım.",
-};
+const sssItems = [
+  { q: "Siparişimi nasıl takip ederim?", a: "Hesabım → Siparişlerim bölümünden tüm siparişlerinizi takip edebilirsiniz." },
+  { q: "İptal/iade nasıl yapılır?", a: "Sipariş onayından sonraki 5 dakika içinde iptal yapılabilir. Destek hattımızı arayın veya WhatsApp'tan bildirin." },
+  { q: "İşletmemi nasıl eklerim?", a: "İşletme Ol butonuna tıklayın, 3 adımlı formu doldurun, 24 saat içinde sizi arayalım." },
+  { q: "Üyelik ücretsiz mi?", a: "Evet, kullanıcı üyeliği tamamen ücretsizdir. İşletmeler için ilk 3 ay komisyon sıfır ve kurulum ücretsizdir." },
+  { q: "Hangi ödeme yöntemleri geçerli?", a: "Şu an siparişler telefon veya WhatsApp üzerinden onaylanmaktadır. Ödeme işletmeyle doğrudan yapılır." },
+  { q: "Şifremi unuttum, ne yapmalıyım?", a: "Şu an şifre sıfırlama özelliği geliştirme aşamasındadır. Destek hattımızdan yardım alabilirsiniz." },
+  { q: "Teslimat süresi ne kadar?", a: "İşletmeye göre değişmekle birlikte ortalama teslimat süresi 20-40 dakikadır." },
+  { q: "Hesabımı nasıl silerim?", a: "Hesap silme talebi için info@erdekonline.com adresine e-posta gönderebilirsiniz." },
+];
+
+function AccordionItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="bg-white rounded-xl border border-orange-100 overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-4 text-left gap-3 hover:bg-orange-50 transition-colors"
+      >
+        <span className="font-semibold text-gray-900 text-sm">{q}</span>
+        <ChevronDown size={16} className={`text-orange-400 shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && (
+        <div className="px-4 pb-4 text-gray-500 text-sm leading-relaxed border-t border-orange-50 pt-3">
+          {a}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function DestekPage() {
   return (
@@ -54,17 +82,10 @@ export default function DestekPage() {
           </div>
         </div>
         <div className="bg-orange-50 border border-orange-100 rounded-2xl p-6">
-          <h2 className="font-black text-orange-800 mb-3">Sık Sorulan Sorular</h2>
-          <div className="space-y-3">
-            {[
-              ["Siparişimi nasıl takip ederim?", "Hesabım > Siparişlerim bölümünden tüm siparişlerinizi takip edebilirsiniz."],
-              ["İptal/iade nasıl yapılır?", "Sipariş onayından sonraki 5 dakika içinde iptal yapılabilir. Destek hattımızı arayın."],
-              ["İşletmemi nasıl eklerim?", "İşletme Ol butonuna tıklayın, 3 adımlı formu doldurun, 24 saat içinde sizi arayalım."],
-            ].map(([q, a]) => (
-              <div key={q} className="bg-white rounded-xl p-4 border border-orange-100">
-                <div className="font-semibold text-gray-900 text-sm mb-1">{q}</div>
-                <div className="text-gray-500 text-sm">{a}</div>
-              </div>
+          <h2 className="font-black text-orange-800 mb-4">Sık Sorulan Sorular</h2>
+          <div className="space-y-2">
+            {sssItems.map((item) => (
+              <AccordionItem key={item.q} q={item.q} a={item.a} />
             ))}
           </div>
         </div>

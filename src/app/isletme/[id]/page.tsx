@@ -6,7 +6,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { ArrowLeft, Star, Clock, Phone, MapPin, Tag, Heart, Share2, MessageSquare, Send, CheckCircle } from "lucide-react";
+import { ArrowLeft, Star, Clock, Phone, MapPin, Tag, Heart, Share2, MessageSquare, Send, CheckCircle, Plus } from "lucide-react";
 
 const isletmeler: Record<string, {
   isim: string; kategori: string; puan: number; sure: string; minSiparis: string;
@@ -16,7 +16,7 @@ const isletmeler: Record<string, {
   "1": {
     isim: "Kalamar Balık Restaurant", kategori: "Balık & Deniz Ürünleri", puan: 4.9, sure: "25-40 dk",
     minSiparis: "150 TL", emoji: "🐟", renk: "bg-blue-100",
-    adres: "Sahil Caddesi No:12, Erdek", telefon: "+90 532 000 0001",
+    adres: "Sahil Caddesi No:12, Erdek", telefon: "+90 266 835 00 01",
     aciklama: "Erdek'in en taze deniz ürünleri ve balıklarını en iyi meze çeşitleriyle sunuyoruz. 20 yıllık tecrübemizle her lokmada denizin tadını hissedeceksiniz.",
     etiketler: ["Taze Balık", "Deniz Ürünleri", "Meze", "Izgara"],
     menu: [
@@ -35,7 +35,7 @@ const isletmeler: Record<string, {
   "2": {
     isim: "Erdek Pide & Lahmacun", kategori: "Pide & Lahmacun", puan: 4.7, sure: "20-35 dk",
     minSiparis: "80 TL", emoji: "🍕", renk: "bg-orange-100",
-    adres: "Çarşı Mah. No:5, Erdek", telefon: "+90 532 000 0002",
+    adres: "Çarşı Mah. No:5, Erdek", telefon: "+90 266 835 00 02",
     aciklama: "Taş fırında pişmiş geleneksel pideler ve lahmacunlar. Unlumuzun tazeliği ve malzemelerimizin kalitesi ile fark yaratıyoruz.",
     etiketler: ["Pide", "Lahmacun", "Fırın", "Kahvaltı"],
     menu: [
@@ -53,14 +53,14 @@ const isletmeler: Record<string, {
   "3": {
     isim: "Şevket Market", kategori: "Market & Bakkal", puan: 4.6, sure: "15-25 dk",
     minSiparis: "50 TL", emoji: "🛒", renk: "bg-green-100",
-    adres: "Bağlarbaşı Mah. No:8, Erdek", telefon: "+90 532 000 0003",
+    adres: "Bağlarbaşı Mah. No:8, Erdek", telefon: "+90 266 835 00 03",
     aciklama: "Gıda, içecek ve temizlik ürünleri hızlı teslimat. Erdek'in en köklü marketi olarak 15 yıldır hizmetinizdeyiz.",
     etiketler: ["Gıda", "İçecek", "Temizlik", "Atıştırmalık"],
   },
   "4": {
     isim: "Erdek Burger & Döner", kategori: "Burger & Fast Food", puan: 4.5, sure: "20-30 dk",
     minSiparis: "100 TL", emoji: "🍔", renk: "bg-yellow-100",
-    adres: "Merkez Mah. No:3, Erdek", telefon: "+90 532 000 0004",
+    adres: "Merkez Mah. No:3, Erdek", telefon: "+90 266 835 00 04",
     aciklama: "El yapımı burgerler ve döner çeşitleri. En taze malzemelerle hazırlanan lezzetler.",
     etiketler: ["Burger", "Döner", "Sandviç", "Fast Food"],
     menu: [
@@ -74,7 +74,7 @@ const isletmeler: Record<string, {
   "5": {
     isim: "Tatlı Dükkanı Erdek", kategori: "Tatlı & Pasta", puan: 4.8, sure: "30-45 dk",
     minSiparis: "120 TL", emoji: "🍰", renk: "bg-pink-100",
-    adres: "Sahil Caddesi No:28, Erdek", telefon: "+90 532 000 0005",
+    adres: "Sahil Caddesi No:28, Erdek", telefon: "+90 266 835 00 05",
     aciklama: "El yapımı pastalar, tatlılar ve dondurma çeşitleri. Her özel gün için sürpriz siparişler alıyoruz.",
     etiketler: ["Baklava", "Pasta", "Dondurma", "Çikolata"],
     menu: [
@@ -88,7 +88,7 @@ const isletmeler: Record<string, {
   "6": {
     isim: "Yerel Köy Ürünleri", kategori: "Yerel & Organik", puan: 4.9, sure: "Aynı Gün",
     minSiparis: "200 TL", emoji: "🫒", renk: "bg-lime-100",
-    adres: "Yaylacık Köyü, Erdek", telefon: "+90 532 000 0006",
+    adres: "Yaylacık Köyü, Erdek", telefon: "+90 266 835 00 06",
     aciklama: "Erdek yöresi doğal zeytinyağı, zeytin, peynir ve bal. Kimyasal gübre ve ilaç kullanılmadan üretilmiş sertifikalı organik ürünler.",
     etiketler: ["Zeytin", "Peynir", "Bal", "Zeytinyağı"],
     menu: [
@@ -97,6 +97,123 @@ const isletmeler: Record<string, {
         { isim: "Kars Kaşarı (500g)", fiyat: "₺220", aciklama: "Köy tipi, olgunlaştırılmış" },
         { isim: "Çiçek Balı (500g)", fiyat: "₺180", aciklama: "Filiz arı, doğal petek" },
         { isim: "Salamura Zeytin (1kg)", fiyat: "₺150", aciklama: "Siyah veya yeşil, tuzlu" },
+      ]},
+    ]
+  },
+"7": {
+    isim: "Erdek Manav", kategori: "Meyve & Sebze", puan: 4.7, sure: "20-30 dk",
+    minSiparis: "60 TL", emoji: "🥦", renk: "bg-emerald-100",
+    adres: "Pazar Yeri No:4, Erdek", telefon: "+90 266 835 00 07",
+    aciklama: "Her sabah taze gelen meyve ve sebzeler. Doğrudan çiftçiden sofraya. Erdek'in en taze manav hizmeti.",
+    etiketler: ["Meyve", "Sebze", "Taze", "Organik"],
+    menu: [
+      { baslik: "Sebzeler", urunler: [
+        { isim: "Domates (1kg)", fiyat: "₺40", aciklama: "Çeri veya normal, taze" },
+        { isim: "Salatalık (1kg)", fiyat: "₺35", aciklama: "Çiftlik çıkışı, taze" },
+        { isim: "Biber (1kg)", fiyat: "₺45", aciklama: "Dolmalık veya kapya" },
+      ]},
+      { baslik: "Meyveler", urunler: [
+        { isim: "Karpuz (kg)", fiyat: "₺20", aciklama: "Tarladan gelme" },
+        { isim: "Şeftali (1kg)", fiyat: "₺55", aciklama: "Erdek yöresi şeftalisi" },
+      ]},
+    ]
+  },
+  "13": {
+    isim: "Erdek Balıkçısı", kategori: "Taze Balık", puan: 4.8, sure: "Aynı Gün",
+    minSiparis: "150 TL", emoji: "🐟", renk: "bg-blue-100",
+    adres: "Liman Caddesi No:2, Erdek", telefon: "+90 266 835 00 13",
+    aciklama: "Her sabah tekneden gelen taze balık. Mevsimlik çipura, levrek, palamut ve daha fazlası. Temizlenmiş ve paketlenmiş olarak teslim edilir.",
+    etiketler: ["Taze Balık", "Deniz Ürünleri", "Mevsimlik", "Günlük"],
+    menu: [
+      { baslik: "Balıklar", urunler: [
+        { isim: "Çipura (kg)", fiyat: "₺380", aciklama: "Günlük taze, temizlenmiş" },
+        { isim: "Levrek (kg)", fiyat: "₺420", aciklama: "Günlük taze, temizlenmiş" },
+        { isim: "Palamut (kg)", fiyat: "₺280", aciklama: "Mevsimlik, taze" },
+        { isim: "Midye (kg)", fiyat: "₺120", aciklama: "Taze, temizlenmiş" },
+      ]},
+    ]
+  },
+  "14": {
+    isim: "Bağ Evi Peynircisi", kategori: "Peynir & Süt Ürünleri", puan: 4.7, sure: "Aynı Gün",
+    minSiparis: "100 TL", emoji: "🧀", renk: "bg-yellow-100",
+    adres: "Köy Yolu No:7, Erdek", telefon: "+90 266 835 00 14",
+    aciklama: "Kendi sürümüzden ürettiğimiz doğal peynirler, yoğurt ve tereyağı. Kimyasal katkı yok, geleneksel üretim.",
+    etiketler: ["Peynir", "Yoğurt", "Tereyağı", "Doğal"],
+    menu: [
+      { baslik: "Peynirler", urunler: [
+        { isim: "Beyaz Peynir (500g)", fiyat: "₺180", aciklama: "Köy tipi, taze" },
+        { isim: "Tulum Peyniri (500g)", fiyat: "₺220", aciklama: "Olgunlaştırılmış, sert" },
+        { isim: "Lor Peyniri (500g)", fiyat: "₺120", aciklama: "Taze, yağsız" },
+      ]},
+      { baslik: "Diğer", urunler: [
+        { isim: "Köy Tereyağı (250g)", fiyat: "₺160", aciklama: "Kendi sütümüzden" },
+        { isim: "Köy Yoğurdu (1kg)", fiyat: "₺90", aciklama: "Tam yağlı, süzme" },
+      ]},
+    ]
+  },
+  "15": {
+    isim: "Erdek Balı", kategori: "Doğal Bal", puan: 5.0, sure: "Aynı Gün",
+    minSiparis: "120 TL", emoji: "🍯", renk: "bg-amber-100",
+    adres: "Bağlıca Köyü, Erdek", telefon: "+90 266 835 00 15",
+    aciklama: "Erdek'in çam ve çiçek balları. Kendi arılarımızdan, doğal yöntemlerle üretilmiş. Hiçbir katkı maddesi içermez.",
+    etiketler: ["Çiçek Balı", "Çam Balı", "Doğal", "Organik"],
+    menu: [
+      { baslik: "Ballar", urunler: [
+        { isim: "Çiçek Balı (500g)", fiyat: "₺180", aciklama: "Mevsim çiçeklerinden" },
+        { isim: "Çam Balı (500g)", fiyat: "₺250", aciklama: "Kazdağları çamından" },
+        { isim: "Petek Bal (500g)", fiyat: "₺220", aciklama: "Doğal petek içinde" },
+      ]},
+    ]
+  },
+"12": {
+    isim: "Gün Batımı Turu", kategori: "Romantik Tekne Turu", puan: 5.0, sure: "3 Saat",
+    minSiparis: "Kişi Başı ₺800", emoji: "🌅", renk: "bg-orange-100",
+    adres: "Erdek Limanı, Erdek", telefon: "+90 266 835 00 12",
+    aciklama: "Marmara Denizi'nin eşsiz gün batımını tekne üzerinde yaşayın. Şarap ve atıştırmalıklar dahil. Çiftlere ve özel kutlamalara özel.",
+    etiketler: ["Romantik", "Gün Batımı", "Özel Tur", "Çift"],
+    menu: [
+      { baslik: "Tur Seçenekleri", urunler: [
+        { isim: "Çift Paketi", fiyat: "₺1.600", aciklama: "2 kişi, şarap ve atıştırmalık dahil" },
+        { isim: "Grup Paketi (4 kişi)", fiyat: "₺2.800", aciklama: "4 kişiye kadar, ikram dahil" },
+      ]},
+    ]
+  },
+  "20": {
+    isim: "Erdek Sahil Pansiyon", kategori: "Pansiyon", puan: 4.7, sure: "Rezervasyon",
+    minSiparis: "Gecelik ₺800'den", emoji: "🏨", renk: "bg-blue-100",
+    adres: "Sahil Caddesi No:15, Erdek", telefon: "+90 266 835 00 20",
+    aciklama: "Denize sıfır konumda, ferah odalar ve kahvaltı dahil. Aile dostu atmosfer. Tüm odalardan deniz manzarası.",
+    etiketler: ["Deniz Manzarası", "Kahvaltı Dahil", "Aile Dostu", "Pansiyon"],
+    menu: [
+      { baslik: "Oda Tipleri", urunler: [
+        { isim: "Standart Oda (2 kişi)", fiyat: "₺800/gece", aciklama: "Deniz manzaralı, kahvaltı dahil" },
+        { isim: "Aile Odası (4 kişi)", fiyat: "₺1.400/gece", aciklama: "Geniş oda, balkon, kahvaltı dahil" },
+      ]},
+    ]
+  },
+  "21": {
+    isim: "Ada Manzara Butik Otel", kategori: "Butik Otel", puan: 4.9, sure: "Rezervasyon",
+    minSiparis: "Gecelik ₺1.500'den", emoji: "🏩", renk: "bg-purple-100",
+    adres: "Merkez Mah. No:22, Erdek", telefon: "+90 266 835 00 21",
+    aciklama: "Marmara adalarına bakan muhteşem manzarası, butik tasarım odaları ve üst düzey hizmetiyle öne çıkan Erdek'in en prestijli oteli.",
+    etiketler: ["Butik", "Ada Manzarası", "Lüks", "Merkez"],
+    menu: [
+      { baslik: "Oda Tipleri", urunler: [
+        { isim: "Deluxe Oda (2 kişi)", fiyat: "₺1.500/gece", aciklama: "Ada manzaralı, minibar dahil" },
+        { isim: "Suite Oda (2 kişi)", fiyat: "₺2.500/gece", aciklama: "Jakuzili, panoramik manzara" },
+      ]},
+    ]
+  },
+  "22": {
+    isim: "Erdek Apart Otel", kategori: "Apart Otel", puan: 4.5, sure: "Rezervasyon",
+    minSiparis: "Gecelik ₺600'den", emoji: "🏠", renk: "bg-green-100",
+    adres: "Bağlarbaşı Mah. No:8, Erdek", telefon: "+90 266 835 00 22",
+    aciklama: "Mutfaklı apart odalarımızla kendinizi evinizde hissedersiniz. Uzun süreli konaklamaya uygun, uygun fiyatlı seçenek.",
+    etiketler: ["Apart", "Mutfaklı", "Uzun Konaklama", "Uygun Fiyat"],
+    menu: [
+      { baslik: "Apart Seçenekleri", urunler: [
+        { isim: "Stüdyo Apart (2 kişi)", fiyat: "₺600/gece", aciklama: "Tek oda, mutfak köşesi" },
+        { isim: "1+1 Apart (3 kişi)", fiyat: "₺900/gece", aciklama: "Ayrı yatak odası, tam mutfak" },
       ]},
     ]
   },
@@ -127,6 +244,32 @@ export default function IsletmeDetayPage() {
       setFavori(favs.includes(id));
     } catch { setFavori(false); }
   }, [id]);
+
+  function sepeteEkle(urunIsim: string, fiyatStr: string) {
+    try {
+      const fiyat = parseFloat(fiyatStr.replace("₺", "").replace(",", ".")) || 0;
+      const raw = localStorage.getItem("eo_sepet");
+      const items: { id: number; isim: string; fiyat: number; adet: number; emoji: string; isletme: string }[] = raw ? JSON.parse(raw) : [];
+      // Farklı işletmeden ürün varsa uyar
+      const mevcutIsletme = items[0]?.isletme;
+      if (mevcutIsletme && mevcutIsletme !== (b?.isim || "") && items.length > 0) {
+        const onay = window.confirm(`Sepetinizde "${mevcutIsletme}" işletmesinden ürünler var. Yeni işletmeden ürün eklemek için sepeti temizlemek gerekiyor. Devam edilsin mi?`);
+        if (!onay) return;
+        localStorage.setItem("eo_sepet", JSON.stringify([]));
+        window.dispatchEvent(new Event("eo_sepet_guncellendi"));
+      }
+      const fresh = mevcutIsletme && mevcutIsletme !== (b?.isim || "") ? [] : items;
+      const existing = fresh.find(i => i.isim === urunIsim);
+      let updated;
+      if (existing) {
+        updated = fresh.map(i => i.isim === urunIsim ? { ...i, adet: i.adet + 1 } : i);
+      } else {
+        updated = [...fresh, { id: Date.now(), isim: urunIsim, fiyat, adet: 1, emoji: b?.emoji || "🛒", isletme: b?.isim || "" }];
+      }
+      localStorage.setItem("eo_sepet", JSON.stringify(updated));
+      window.dispatchEvent(new Event("eo_sepet_guncellendi"));
+    } catch { /* sessiz hata */ }
+  }
 
   function favoriToggle() {
     try {
@@ -181,7 +324,14 @@ return (
               className={`p-2 rounded-full transition-colors ${favori ? "text-red-500 bg-red-50" : "text-gray-400 hover:bg-gray-100"}`}>
               <Heart size={20} fill={favori ? "currentColor" : "none"} />
             </button>
-            <button className="p-2 rounded-full text-gray-400 hover:bg-gray-100 transition-colors">
+            <button onClick={() => {
+              if (navigator.share) {
+                navigator.share({ title: b.isim, text: b.aciklama, url: window.location.href });
+              } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Link kopyalandı!");
+              }
+            }} className="p-2 rounded-full text-gray-400 hover:bg-gray-100 transition-colors">
               <Share2 size={20} />
             </button>
           </div>
@@ -244,11 +394,15 @@ return (
                         <div className="space-y-2">
                           {bolum.urunler.map(urun => (
                             <div key={urun.isim} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
-                              <div>
+                              <div className="flex-1 min-w-0">
                                 <p className="font-semibold text-gray-900 text-sm">{urun.isim}</p>
                                 <p className="text-gray-400 text-xs">{urun.aciklama}</p>
+                                <p className="font-black text-orange-500 text-sm mt-1">{urun.fiyat}</p>
                               </div>
-                              <span className="font-black text-orange-500 text-sm shrink-0 ml-4">{urun.fiyat}</span>
+                              <button onClick={() => sepeteEkle(urun.isim, urun.fiyat)}
+                                className="ml-3 shrink-0 w-8 h-8 bg-orange-500 hover:bg-orange-600 text-white rounded-full flex items-center justify-center transition-colors shadow-sm">
+                                <Plus size={16} />
+                              </button>
                             </div>
                           ))}
                         </div>

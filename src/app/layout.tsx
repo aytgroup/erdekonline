@@ -1,3 +1,5 @@
+import ScrollToTop from "@/components/ScrollToTop";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -31,6 +33,16 @@ export const metadata: Metadata = {
     type: "website",
     images: [{ url: "/logo.png", width: 1254, height: 1254, alt: "ErdekOnline Logo" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "ErdekOnline - Erdek'in Dijital Platformu",
+    description: "Erdek bir tık uzağında!",
+    images: ["/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -41,7 +53,9 @@ export default function RootLayout({
   return (
     <html lang="tr" className={`${inter.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-gray-50 antialiased">
+        <GoogleAnalytics />
         {children}
+        <ScrollToTop />
       </body>
     </html>
   );

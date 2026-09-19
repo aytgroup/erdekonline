@@ -23,7 +23,7 @@ const stats = [
   { value: "~30dk", label: "Ort. Teslimat", icon: "🚀" },
 ];
 
-const quickTags = ["Balık Restaurant", "Pizza", "Market", "Tekne Turu", "Pansiyon"];
+const quickTags = ["Balık Restaurant", "Pizza", "Market", "Tekne Turu", "Pansiyon", "Zeytinyağı", "Bal", "Gün Batımı Turu"];
 
 export default function HeroSection() {
   const [search, setSearch] = useState("");
@@ -41,10 +41,27 @@ export default function HeroSection() {
   return (
     <>
       {/* ───── HERO ───── */}
-      <section
-        className="w-full min-h-[520px] flex flex-col items-center justify-center py-20 px-6 text-center"
-        style={{ background: "linear-gradient(135deg,#0369a1 0%,#0ea5e9 55%,#1d4ed8 100%)" }}
-      >
+      <section className="relative w-full min-h-[520px] flex flex-col items-center justify-center py-20 px-6 text-center overflow-hidden">
+        {/* YouTube Drone Video arka plan */}
+        {/* Outer div: görünen alan — sadece ortayı gösterir, kenarları keser */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {/* Inner wrapper: iframe'i üstten ve alttan 80px dışarı taşır → YouTube UI kesilir */}
+          <div className="absolute" style={{ top: "-80px", bottom: "-140px", left: 0, right: 0 }}>
+            <iframe
+              src="https://www.youtube.com/embed/pCM1SqwtdNA?autoplay=1&mute=1&loop=1&playlist=pCM1SqwtdNA&controls=0&showinfo=0&rel=0&modestbranding=1&start=10&disablekb=1&iv_load_policy=3&fs=0&cc_load_policy=0"
+              allow="autoplay; encrypted-media"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ width: "177.78vh", height: "56.25vw", minWidth: "100%", minHeight: "100%", pointerEvents: "none" }}
+              frameBorder="0"
+            />
+          </div>
+        </div>
+        {/* Gradient overlay — mevcut renkleri korur, video üstünde yarı saydam */}
+        <div className="absolute inset-0 z-10" style={{ background: "linear-gradient(135deg,rgba(3,105,161,0.82) 0%,rgba(14,165,233,0.75) 55%,rgba(29,78,216,0.82) 100%)" }} />
+        {/* Alt kenar maskesi — YouTube altyazılarını tamamen kapatır */}
+        <div className="absolute bottom-0 left-0 right-0 z-20" style={{ height: "80px", background: "linear-gradient(to bottom, transparent, rgba(14,100,200,0.98) 60%, rgb(10,80,180))" }} />
+        {/* İçerik */}
+        <div className="relative z-20 w-full flex flex-col items-center">
         {/* Konum rozeti */}
         <div className="inline-flex items-center gap-2 bg-white/20 text-white text-sm font-semibold px-5 py-2 rounded-full border border-white/40 mb-7">
           <MapPin size={15} />
@@ -54,7 +71,7 @@ export default function HeroSection() {
 
         {/* Başlık */}
         <h1 className="text-5xl md:text-6xl font-black text-white leading-tight mb-5 drop-shadow-lg">
-          Erdek&apos;in Her Şeyi<br />
+          Erdek Artık<br />
           <span className="text-yellow-300">Bir Tık Uzağında</span>
         </h1>
 
@@ -106,21 +123,22 @@ export default function HeroSection() {
             </div>
           ))}
         </div>
+        </div>
       </section>
 
       {/* ───── KATEGORİLER ───── */}
       <section className="w-full bg-white py-12 px-6 border-b border-gray-100">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-gray-800 font-black text-2xl mb-8 text-center">🔍 Ne arıyorsunuz?</h2>
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">
             {categories.map((cat) => (
               <Link
                 key={cat.label}
                 href={cat.href}
-                className="flex flex-col items-center gap-3 py-5 px-2 rounded-2xl bg-gray-50 hover:bg-sky-50 hover:shadow-lg hover:-translate-y-1 transition-all group border border-transparent hover:border-sky-100"
+                className="flex flex-col items-center gap-2 py-4 px-1 rounded-2xl bg-gray-50 hover:bg-sky-50 hover:shadow-lg hover:-translate-y-1 transition-all group border border-transparent hover:border-sky-100"
               >
-                <span className="text-4xl group-hover:scale-110 transition-transform">{cat.icon}</span>
-                <span className="text-sm font-semibold text-gray-600 text-center leading-tight">{cat.label}</span>
+                <span className="text-3xl sm:text-4xl group-hover:scale-110 transition-transform">{cat.icon}</span>
+                <span className="text-xs sm:text-sm font-semibold text-gray-600 text-center leading-tight">{cat.label}</span>
               </Link>
             ))}
           </div>

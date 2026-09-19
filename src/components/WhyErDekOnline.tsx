@@ -1,10 +1,10 @@
 const features = [
   { emoji: "⚡", title: "Hızlı Teslimat", desc: "Ortalama 30 dakikada kapınıza. Erdek'in her köşesine ulaşıyoruz.", bg: "bg-yellow-50 border-yellow-100" },
-  { emoji: "🔒", title: "Güvenli Ödeme", desc: "256-bit şifreleme. Kredi kartı, havale veya kapıda ödeme.", bg: "bg-green-50 border-green-100" },
+  { emoji: "📞", title: "Kolay Sipariş", desc: "Tek tıkla arayın veya WhatsApp üzerinden sipariş verin. Hızlı ve pratik.", bg: "bg-green-50 border-green-100" },
   { emoji: "❤️", title: "Yerel Destek", desc: "Erdek'in işletmelerini destekleyin. Her siparişte şehrinize katkı.", bg: "bg-red-50 border-red-100" },
-  { emoji: "📞", title: "7/24 Destek", desc: "WhatsApp veya telefon ile anında yanıt alın.", bg: "bg-sky-50 border-sky-100" },
-  { emoji: "🌟", title: "Puan Kazan", desc: "Her siparişte puan kazanın, ücretsiz siparişler verin.", bg: "bg-purple-50 border-purple-100" },
-  { emoji: "👥", title: "Topluluk", desc: "Yorumlar, öneriler ve etkinlikler bir arada. Erdek'in nabzı.", bg: "bg-orange-50 border-orange-100" },
+  { emoji: "💬", title: "7/24 Destek", desc: "WhatsApp veya telefon ile anında yanıt alın. Her zaman yanınızdayız.", bg: "bg-sky-50 border-sky-100" },
+  { emoji: "⭐", title: "Güvenilir Yorumlar", desc: "Gerçek müşteri yorumları ile doğru işletmeyi seçin.", bg: "bg-purple-50 border-purple-100" },
+  { emoji: "👥", title: "Topluluk", desc: "Yorumlar, öneriler ve etkinlikler bir arada. Erdek'in dijital nabzı.", bg: "bg-orange-50 border-orange-100" },
 ];
 
 export default function WhyErDekOnline() {
@@ -16,7 +16,7 @@ export default function WhyErDekOnline() {
             Neden ErdekOnline?
           </span>
           <h2 className="text-3xl font-black text-gray-900 mb-3">
-            Erdek&apos;e Özel, <span className="text-sky-500">Size Özel</span>
+            <span className="text-orange-500">Erdek&apos;e Özel,</span> <span className="text-sky-500">Size Özel</span>
           </h2>
           <p className="text-gray-500 text-base max-w-lg mx-auto">
             Büyük şehir uygulamalarının sunmadığı yerel deneyimi Erdek&apos;in ruhunu taşıyan bir platformla yaşayın.

@@ -14,16 +14,28 @@ const tumIsletmeler: Record<string, { isim: string; kategori: string; puan: numb
   "4": { isim: "Erdek Burger & Döner", kategori: "Burger & Fast Food", puan: 4.5, sure: "20-30 dk", emoji: "🍔", renk: "bg-yellow-100" },
   "5": { isim: "Tatlı Dükkanı Erdek", kategori: "Tatlı & Pasta", puan: 4.8, sure: "30-45 dk", emoji: "🍰", renk: "bg-pink-100" },
   "6": { isim: "Yerel Köy Ürünleri", kategori: "Yerel & Organik", puan: 4.9, sure: "Aynı Gün", emoji: "🫒", renk: "bg-lime-100" },
+  "7": { isim: "Erdek Manav", kategori: "Meyve & Sebze", puan: 4.7, sure: "20-30 dk", emoji: "🥦", renk: "bg-emerald-100" },
+  "12": { isim: "Gün Batımı Turu", kategori: "Romantik Tekne Turu", puan: 5.0, sure: "3 Saat", emoji: "🌅", renk: "bg-orange-100" },
+  "13": { isim: "Erdek Balıkçısı", kategori: "Taze Balık", puan: 4.8, sure: "Aynı Gün", emoji: "🐟", renk: "bg-blue-100" },
+  "14": { isim: "Bağ Evi Peynircisi", kategori: "Peynir & Süt Ürünleri", puan: 4.7, sure: "Aynı Gün", emoji: "🧀", renk: "bg-yellow-100" },
+  "15": { isim: "Erdek Balı", kategori: "Doğal Bal", puan: 5.0, sure: "Aynı Gün", emoji: "🍯", renk: "bg-amber-100" },
+  "20": { isim: "Erdek Sahil Pansiyon", kategori: "Pansiyon", puan: 4.7, sure: "Rezervasyon", emoji: "🏨", renk: "bg-blue-100" },
+  "21": { isim: "Ada Manzara Butik Otel", kategori: "Butik Otel", puan: 4.9, sure: "Rezervasyon", emoji: "🏩", renk: "bg-purple-100" },
+  "22": { isim: "Erdek Apart Otel", kategori: "Apart Otel", puan: 4.5, sure: "Rezervasyon", emoji: "🏠", renk: "bg-green-100" },
 };
 
 export default function FavorilerPage() {
   const [favoriler, setFavoriler] = useState<string[]>([]);
+  const [yuklendi, setYuklendi] = useState(false);
 
   useEffect(() => {
     try {
+      const kullanici = localStorage.getItem("eo_aktif_kullanici");
+      if (!kullanici) { window.location.href = "/giris"; return; }
       const raw = localStorage.getItem("eo_favoriler");
       setFavoriler(raw ? JSON.parse(raw) : []);
     } catch { setFavoriler([]); }
+    setYuklendi(true);
   }, []);
 
   function favoriKaldir(id: string) {

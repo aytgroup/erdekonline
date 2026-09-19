@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 const istatistikler = [
-  { deger: "50+", etiket: "Kayıtlı İşletme", icon: "🏪" },
-  { deger: "1.000+", etiket: "Mutlu Kullanıcı", icon: "😊" },
+  { deger: "20+", etiket: "Kayıtlı İşletme", icon: "🏪" },
+  { deger: "500+", etiket: "Mutlu Kullanıcı", icon: "😊" },
   { deger: "4.8★", etiket: "Ortalama Puan", icon: "⭐" },
-  { deger: "2024", etiket: "Kuruluş Yılı", icon: "🚀" },
+  { deger: "2026", etiket: "Kuruluş Yılı", icon: "🚀" },
 ];
 
 export default function HakkimizdaPage() {

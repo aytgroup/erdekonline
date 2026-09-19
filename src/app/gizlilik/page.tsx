@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Gizlilik Politikası | ErdekOnline",
+  description: "ErdekOnline gizlilik politikası. Kişisel verilerinizin nasıl toplandığı ve kullanıldığı hakkında bilgi.",
+};
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function GizlilikPage() {
   return (
@@ -25,6 +32,7 @@ export default function GizlilikPage() {
         </div>
       </div>
       <Footer />
+      <WhatsAppButton />
     </main>
   );
 }
