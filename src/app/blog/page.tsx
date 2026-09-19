@@ -5,11 +5,11 @@ import Footer from "@/components/Footer";
 import { blogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog — Erdek Rehberi | ErdekOnline",
+  title: "Erdek Rehberi — Blog | ErdekOnline",
   description: "Erdek hakkında her şey: gezi rehberleri, plajlar, yemek, konaklama ve tekne turları. Erdek'i keşfetmek için ErdekOnline Blog.",
   keywords: "erdek blog, erdek rehberi, erdek tatil, erdek gezi, erdek nerede, erdek plajları",
   openGraph: {
-    title: "Blog — Erdek Rehberi | ErdekOnline",
+    title: "Erdek Rehberi — Blog | ErdekOnline",
     description: "Erdek hakkında gezi rehberleri, plajlar, yemek ve konaklama ipuçları.",
     url: "https://erdekonline.com/blog",
   },
