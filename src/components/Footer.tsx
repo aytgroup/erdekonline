@@ -20,6 +20,7 @@ const businessLinks = [
   { href: "/isletme-bilgi", label: "Nasıl Çalışır?" },
   { href: "/destek", label: "Destek" },
   { href: "/hakkimizda", label: "Hakkımızda" },
+  { href: "/blog", label: "📝 Erdek Rehberi" },
 ];
 
 const socialLinks = [

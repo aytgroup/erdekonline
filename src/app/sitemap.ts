@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { getAllSlugs } from "@/lib/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://erdekonline.com";
@@ -24,9 +25,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: "/gizlilik", priority: 0.3, changeFrequency: "yearly" },
     { url: "/kullanim-kosullari", priority: 0.3, changeFrequency: "yearly" },
     { url: "/kvkk", priority: 0.3, changeFrequency: "yearly" },
+    { url: "/blog", priority: 0.8, changeFrequency: "weekly" },
   ];
 
   const isletmeIdler = [1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 20, 21, 22];
+  const blogSlugs = getAllSlugs();
 
   return [
     ...sayfalar.map(s => ({
@@ -40,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.8,
+    })),
+    ...blogSlugs.map(slug => ({
+      url: `${base}/blog/${slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
   ];
 }
