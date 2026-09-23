@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getBlogPost, getAllSlugs, blogPosts } from "@/lib/blog";
+import { getBlogPost, getAllSlugs, blogPosts, decodeContent } from "@/lib/blog";
 
 export async function generateStaticParams() {
   return getAllSlugs().map((slug) => ({ slug }));
@@ -104,7 +104,7 @@ export default async function BlogPostPage({
       <div className="max-w-3xl mx-auto w-full px-4 py-10">
         <article
           className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-10 prose prose-gray prose-headings:font-bold prose-h2:text-xl prose-h2:mt-8 prose-h3:text-lg prose-a:text-sky-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-800 max-w-none"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          dangerouslySetInnerHTML={{ __html: decodeContent(post.content) }}
         />
 
         {/* CTA */}

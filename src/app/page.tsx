@@ -4,6 +4,7 @@ import HeroSection from "@/components/HeroSection";
 import FeaturedBusinesses from "@/components/FeaturedBusinesses";
 import WhyErDekOnline from "@/components/WhyErDekOnline";
 import TestimonialSection from "@/components/TestimonialSection";
+import BlogPreview from "@/components/BlogPreview";
 import BusinessCTA from "@/components/BusinessCTA";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -27,6 +28,7 @@ export default function Home() {
       <FeaturedBusinesses />
       <WhyErDekOnline />
       <TestimonialSection />
+      <BlogPreview />
       <BusinessCTA />
       <Footer />
       <WhatsAppButton />
