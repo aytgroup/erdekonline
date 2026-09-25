@@ -106,7 +106,7 @@ const jsonLd = {
         url: "https://erdekonline.com/destek",
       },
       sameAs: [
-        "https://www.instagram.com/erdekonline/",
+        "https://www.instagram.com/erdekonlinecom/",
         "https://www.facebook.com/erdekonline",
         "https://twitter.com/erdekonline",
       ],
