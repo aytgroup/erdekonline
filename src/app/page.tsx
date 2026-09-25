@@ -11,12 +11,17 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const metadata: Metadata = {
   title: "ErdekOnline — Erdek'in Dijital Platformu",
-  description: "Yemek siparişinden market alışverişine, tekne turundan konaklama rezervasyonuna — Erdek'in tüm hizmetleri tek platformda. Erdek bir tık uzağında!",
-  keywords: "Erdek, yemek siparişi, market, tekne turu, konaklama, yerel ürünler, Balıkesir",
+  description:
+    "Erdek yemek siparişi, market, tekne turu, konaklama ve yerel ürünler tek platformda. Erdek'in tüm hizmetleri ErdekOnline'da — Erdek bir tık uzağında!",
+  keywords:
+    "Erdek, Erdek yemek siparişi, Erdek market, Erdek tekne turu, Erdek konaklama, Erdek yerel ürünler, Balıkesir Erdek, Kapadağ, Erdek tatil",
+  alternates: { canonical: "https://erdekonline.com" },
   openGraph: {
     title: "ErdekOnline — Erdek'in Dijital Platformu",
-    description: "Erdek'in tüm hizmetleri tek platformda. Erdek bir tık uzağında!",
-    images: [{ url: "/logo.png", width: 1254, height: 1254 }],
+    description:
+      "Erdek yemek siparişi, market, tekne turu, konaklama ve yerel ürünler tek platformda. Erdek bir tık uzağında!",
+    url: "https://erdekonline.com",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "ErdekOnline — Erdek'in Dijital Platformu" }],
   },
 };
 

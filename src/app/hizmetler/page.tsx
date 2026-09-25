@@ -6,8 +6,18 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const metadata: Metadata = {
-  title: "Hizmetler | ErdekOnline",
-  description: "Erdek'teki tüm hizmet sektörleri. Kuaför, tamir, eczane ve daha fazlası.",
+  title: "Erdek Hizmetler — Kuaför, Tamir ve Yerel Hizmetler",
+  description:
+    "Erdek'teki tüm yerel hizmetler: kuaför, güzellik salonu, tadilat, tamir, eczane ve daha fazlası. ErdekOnline ile Erdek'in en iyi hizmet sağlayıcılarını keşfedin.",
+  keywords:
+    "Erdek hizmetler, Erdek kuaför, Erdek tamir, Erdek eczane, Erdek yerel hizmetler, Erdek işletme",
+  alternates: { canonical: "https://erdekonline.com/hizmetler" },
+  openGraph: {
+    title: "Erdek Hizmetler — ErdekOnline",
+    description: "Erdek'teki kuaför, tamir, eczane ve tüm yerel hizmetleri keşfet.",
+    url: "https://erdekonline.com/hizmetler",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Erdek Hizmetler" }],
+  },
 };
 
 const kategoriler = [

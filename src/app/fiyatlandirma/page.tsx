@@ -6,8 +6,18 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { ArrowLeft, Check } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Fiyatlandırma | ErdekOnline",
-  description: "ErdekOnline işletme paketleri ve fiyatları. Ücretsiz başlangıç, Standart ve Premium planlar.",
+  title: "Erdek İşletme Fiyatlandırma — Ücretsiz Başla",
+  description:
+    "ErdekOnline işletme paketleri ve fiyatları. Ücretsiz başlangıç planı ile hemen kaydol, Erdek'teki müşterilere ulaş. İlk 3 ay komisyon sıfır!",
+  keywords:
+    "ErdekOnline fiyat, Erdek işletme kaydı, Erdek dijital platform fiyat, ErdekOnline paket",
+  alternates: { canonical: "https://erdekonline.com/fiyatlandirma" },
+  openGraph: {
+    title: "Erdek İşletme Fiyatlandırma — ErdekOnline",
+    description: "Ücretsiz başla, Erdek'teki müşterilere ulaş. İlk 3 ay komisyon sıfır!",
+    url: "https://erdekonline.com/fiyatlandirma",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "ErdekOnline Fiyatlandırma" }],
+  },
 };
 
 const planlar = [
