@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { LogOut, Store, Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle, Package, BarChart3, Users, Star } from "lucide-react";
+import { LogOut, Store, Phone, Mail, MapPin, Clock, CheckCircle, AlertCircle, Package, BarChart3, Users, Star, ChevronDown } from "lucide-react";
+import { isletmeSiparisleri, isletmeIstatistik, siparisGuncelle, type Siparis } from "@/lib/siparis";
 import Footer from "@/components/Footer";
 
 interface AktifIsletme {
@@ -17,13 +18,38 @@ interface AktifIsletme {
 export default function IsletmePanelPage() {
   const router = useRouter();
   const [isletme, setIsletme] = useState<AktifIsletme | null>(null);
+  const [siparisler, setSiparisler] = useState<Siparis[]>([]);
+  const [istat, setIstat] = useState({ toplamSiparis: 0, teslimEdilen: 0, toplamKazanc: 0, aktifSiparis: 0 });
+  const [acikSiparis, setAcikSiparis] = useState<string | null>(null);
+
+  function siparisleriYukle(isletmeAdi: string) {
+    const s = isletmeSiparisleri(isletmeAdi);
+    setSiparisler(s);
+    setIstat(isletmeIstatistik(isletmeAdi));
+  }
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem("eo_aktif_isletme");
       if (!raw) { router.replace("/isletme-giris"); return; }
-      setIsletme(JSON.parse(raw));
+      const parsed = JSON.parse(raw);
+      setIsletme(parsed);
+      siparisleriYukle(parsed.isletmeAdi);
     } catch { router.replace("/isletme-giris"); }
+
+    const handler = () => {
+      const raw = localStorage.getItem("eo_aktif_isletme");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        siparisleriYukle(parsed.isletmeAdi);
+      }
+    };
+    window.addEventListener("eo_yeni_siparis", handler);
+    window.addEventListener("eo_siparis_guncellendi", handler);
+    return () => {
+      window.removeEventListener("eo_yeni_siparis", handler);
+      window.removeEventListener("eo_siparis_guncellendi", handler);
+    };
   }, [router]);
 
   if (!isletme) return (
@@ -85,13 +111,13 @@ export default function IsletmePanelPage() {
             <div className="flex items-start gap-3 text-gray-600"><MapPin size={15} className="text-sky-400 shrink-0 mt-0.5" /><span>{isletme.adres}</span></div>
           </div>
         </div>
-        {/* İstatistik Kartları */}
+        {/* Istatistik Kartlari — Gercek Veri */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { icon: <Users size={20} className="text-sky-500" />, label: "Bu Ay Görüntülenme", value: "—", bg: "bg-sky-50" },
-            { icon: <Package size={20} className="text-orange-500" />, label: "Toplam Sipariş", value: "0", bg: "bg-orange-50" },
-            { icon: <Star size={20} className="text-yellow-500" />, label: "Ortalama Puan", value: "—", bg: "bg-yellow-50" },
-            { icon: <BarChart3 size={20} className="text-green-500" />, label: "Toplam Kazanç", value: "—₺", bg: "bg-green-50" },
+            { icon: <Package size={20} className="text-orange-500" />, label: "Toplam Siparis", value: String(istat.toplamSiparis), bg: "bg-orange-50" },
+            { icon: <CheckCircle size={20} className="text-green-500" />, label: "Teslim Edilen", value: String(istat.teslimEdilen), bg: "bg-green-50" },
+            { icon: <AlertCircle size={20} className="text-yellow-500" />, label: "Aktif Siparis", value: String(istat.aktifSiparis), bg: "bg-yellow-50" },
+            { icon: <BarChart3 size={20} className="text-sky-500" />, label: "Toplam Kazanc", value: istat.toplamKazanc > 0 ? `${istat.toplamKazanc.toLocaleString("tr-TR")} TL` : "—", bg: "bg-sky-50" },
           ].map((s, i) => (
             <div key={i} className={`${s.bg} rounded-2xl p-5 flex flex-col gap-2`}>
               {s.icon}
@@ -102,12 +128,59 @@ export default function IsletmePanelPage() {
         </div>
 
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-          <div className="flex items-center gap-2 mb-4"><Package size={20} className="text-orange-500" /><h2 className="font-black text-gray-900 text-lg">Siparişler</h2></div>
-          <div className="text-center py-10">
-            <div className="text-5xl mb-3">📦</div>
-            <p className="text-gray-500 font-medium">Henüz sipariş yok.</p>
-            <p className="text-gray-400 text-sm mt-1">Yeni siparişler burada görünecek.</p>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2"><Package size={20} className="text-orange-500" /><h2 className="font-black text-gray-900 text-lg">Siparisler</h2></div>
+            {istat.aktifSiparis > 0 && <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full animate-pulse">{istat.aktifSiparis} Yeni</span>}
           </div>
+          {siparisler.length === 0 ? (
+            <div className="text-center py-10">
+              <div className="text-5xl mb-3">📦</div>
+              <p className="text-gray-500 font-medium">Henuz siparis yok.</p>
+              <p className="text-gray-400 text-sm mt-1">Yeni siparisler burada gorunecek.</p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-3">
+              {siparisler.map(s => (
+                <div key={s.id} className={`border rounded-xl overflow-hidden ${s.durum === "hazirlaniyor" ? "border-orange-200 bg-orange-50" : s.durum === "yolda" ? "border-blue-200 bg-blue-50" : s.durum === "teslim_edildi" ? "border-green-200 bg-green-50" : "border-gray-200 bg-gray-50"}`}>
+                  <div className="p-4 flex items-center justify-between cursor-pointer" onClick={() => setAcikSiparis(acikSiparis === s.id ? null : s.id)}>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full text-white ${s.durum === "hazirlaniyor" ? "bg-orange-500" : s.durum === "yolda" ? "bg-blue-500" : s.durum === "teslim_edildi" ? "bg-green-500" : "bg-gray-400"}`}>
+                          {s.durum === "hazirlaniyor" ? "Hazirlaniyor" : s.durum === "yolda" ? "Yolda" : s.durum === "teslim_edildi" ? "Teslim Edildi" : "Iptal"}
+                        </span>
+                        <span className="text-xs text-gray-500">{s.tarih}</span>
+                      </div>
+                      <p className="font-bold text-gray-900 text-sm">{s.urunler.map(u => u.isim).join(", ")}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{s.teslimat?.ad} — {s.toplam.toLocaleString("tr-TR")} TL</p>
+                    </div>
+                    <ChevronDown size={16} className={`text-gray-400 transition-transform ${acikSiparis === s.id ? "rotate-180" : ""}`} />
+                  </div>
+                  {acikSiparis === s.id && (
+                    <div className="border-t border-gray-200 px-4 py-4 bg-white">
+                      <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
+                        <div><p className="text-xs font-semibold text-gray-400 mb-1">Musteri</p><p className="font-medium">{s.teslimat?.ad}</p></div>
+                        <div><p className="text-xs font-semibold text-gray-400 mb-1">Telefon</p><a href={`tel:${s.teslimat?.telefon}`} className="font-medium text-sky-600">{s.teslimat?.telefon}</a></div>
+                        <div className="col-span-2"><p className="text-xs font-semibold text-gray-400 mb-1">Adres</p><p className="text-gray-700">{s.teslimat?.adres}</p></div>
+                        {s.teslimat?.not && <div className="col-span-2"><p className="text-xs font-semibold text-gray-400 mb-1">Not</p><p className="italic text-gray-700">{s.teslimat.not}</p></div>}
+                        <div className="col-span-2">
+                          <p className="text-xs font-semibold text-gray-400 mb-2">Urunler</p>
+                          {s.urunler.map((u, i) => <div key={i} className="flex justify-between text-sm py-1 border-b border-gray-100 last:border-0"><span>{u.isim} x{u.adet}</span><span className="font-bold">{(u.fiyat * u.adet).toLocaleString("tr-TR")} TL</span></div>)}
+                          <div className="flex justify-between font-black text-base mt-2"><span>Toplam</span><span className="text-orange-600">{s.toplam.toLocaleString("tr-TR")} TL</span></div>
+                        </div>
+                      </div>
+                      {s.durum !== "teslim_edildi" && s.durum !== "iptal" && (
+                        <div className="flex gap-2 mt-2">
+                          {s.durum === "hazirlaniyor" && <button onClick={() => siparisGuncelle(s.id, "yolda")} className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm">Yola Cikti</button>}
+                          {s.durum === "yolda" && <button onClick={() => siparisGuncelle(s.id, "teslim_edildi")} className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm">Teslim Edildi</button>}
+                          <button onClick={() => siparisGuncelle(s.id, "iptal")} className="px-4 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2.5 rounded-xl text-sm border border-red-200">Iptal</button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="text-center"><Link href="/" className="text-sm text-gray-400 hover:text-sky-600 transition-colors">← Ana Sayfaya Dön</Link></div>
       </div>

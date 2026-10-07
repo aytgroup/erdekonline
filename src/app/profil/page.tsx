@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { User, Mail, Phone, Calendar, LogOut, ShoppingBag, Heart, ArrowLeft, Lock, Eye, EyeOff, CheckCircle, Edit3, Save, X } from "lucide-react";
+import { kullaniciSiparisleri, eski_siparisleriTasi } from "@/lib/siparis";
 
 interface Kullanici { ad: string; soyad: string; email: string; telefon: string; kayitTarihi: string; sifre?: string; }
 
@@ -47,11 +48,20 @@ export default function ProfilPage() {
     } catch { setSifreMsg({ tip: "hata", metin: "Bir hata oluştu." }); }
   }
 
+  const [siperisSayisi, setSiparisSayisi] = useState(0);
+  const [favoriSayisi, setFavoriSayisi] = useState(0);
+
   useEffect(() => {
+    eski_siparisleriTasi();
     try {
       const raw = localStorage.getItem("eo_aktif_kullanici");
-      if (raw) setKullanici(JSON.parse(raw));
-      else router.push("/giris");
+      if (raw) {
+        const k = JSON.parse(raw);
+        setKullanici(k);
+        setSiparisSayisi(kullaniciSiparisleri(k.email).length);
+        const favs: string[] = JSON.parse(localStorage.getItem("eo_favoriler") || "[]");
+        setFavoriSayisi(favs.length);
+      } else router.push("/giris");
     } catch { router.push("/giris"); }
   }, [router]);
 
@@ -199,19 +209,21 @@ export default function ProfilPage() {
             <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-orange-200 transition-colors">
               <ShoppingBag size={22} className="text-orange-500" />
             </div>
-            <div>
-              <p className="font-bold text-gray-900">Siparişlerim</p>
-              <p className="text-gray-400 text-sm">Geçmiş siparişleriniz</p>
+            <div className="flex-1">
+              <p className="font-bold text-gray-900">Siparislerim</p>
+              <p className="text-gray-400 text-sm">{siperisSayisi > 0 ? `${siperisSayisi} siparis` : "Gecmis siparisleriniz"}</p>
             </div>
+            {siperisSayisi > 0 && <span className="bg-orange-500 text-white text-xs font-black px-2.5 py-1 rounded-full shrink-0">{siperisSayisi}</span>}
           </Link>
           <Link href="/favoriler" className="bg-white rounded-2xl border border-gray-100 p-5 flex items-center gap-4 hover:shadow-md hover:-translate-y-0.5 transition-all group">
             <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-red-200 transition-colors">
               <Heart size={22} className="text-red-500" />
             </div>
-            <div>
+            <div className="flex-1">
               <p className="font-bold text-gray-900">Favorilerim</p>
-              <p className="text-gray-400 text-sm">Beğendiğiniz işletmeler</p>
+              <p className="text-gray-400 text-sm">{favoriSayisi > 0 ? `${favoriSayisi} isletme` : "Begenilen isletmeler"}</p>
             </div>
+            {favoriSayisi > 0 && <span className="bg-red-500 text-white text-xs font-black px-2.5 py-1 rounded-full shrink-0">{favoriSayisi}</span>}
           </Link>
         </div>
 

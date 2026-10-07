@@ -25,7 +25,7 @@ export default function IsletmeGirisPage() {
       try {
         const basvurular = JSON.parse(localStorage.getItem("erdekonline_basvurular") || "[]");
         const isletme = basvurular.find((b: { email: string; telefon: string; durum: string }) =>
-          b.email === email && (b.telefon === sifre || sifre === "erdek2026") && b.durum === "onaylandi"
+          b.email === email && b.telefon === sifre && b.durum === "onaylandi"
         );
         if (isletme) {
           localStorage.setItem("eo_aktif_isletme", JSON.stringify(isletme));

@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Building2, Phone, Mail, MapPin, ChevronDown } from "lucide-react";
@@ -9,192 +8,91 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-const cats = [
-  "Restoran / Kafe", "Market / Bakkal", "Tekne Turu",
-  "Konaklama / Pansiyon", "Yerel Ürünler", "Kuaför / Güzellik",
-  "Eczane", "Diğer Hizmetler",
-];
-
-function Step1({ onSubmit }: { onSubmit: (e: React.FormEvent<HTMLFormElement>) => void }) {
-  return (
-    <form className="flex flex-col gap-5" onSubmit={onSubmit}>
-      <h2 className="text-xl font-black text-gray-900 mb-2 flex items-center gap-2">
-        <Building2 size={20} className="text-orange-500" /> İşletme Bilgileri
-      </h2>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">İşletme Adı *</label>
-        <input required name="isletmeAdi" type="text" placeholder="Örn: Kalamar Balık Restaurant"
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400 transition-colors" />
-      </div>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Kategori *</label>
-        <div className="relative">
-          <select required name="kategori" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400 appearance-none bg-white">
-            <option value="">Kategori seçin...</option>
-            {cats.map((c) => <option key={c} value={c}>{c}</option>)}
-          </select>
-          <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
-        </div>
-      </div>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Açıklama</label>
-        <textarea name="aciklama" rows={3} placeholder="İşletmenizi kısaca tanıtın..."
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400 transition-colors resize-none" />
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Açılış</label>
-          <input name="acilis" type="time" defaultValue="09:00" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400" />
-        </div>
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1.5">Kapanış</label>
-          <input name="kapanis" type="time" defaultValue="22:00" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400" />
-        </div>
-      </div>
-      <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-xl transition-colors text-base mt-2">
-        Devam Et →
-      </button>
-    </form>
-  );
-}
-
-function Step2({ onSubmit, onBack }: { onSubmit: (e: React.FormEvent<HTMLFormElement>) => void; onBack: () => void }) {
-  return (
-    <form className="flex flex-col gap-5" onSubmit={onSubmit}>
-      <h2 className="text-xl font-black text-gray-900 mb-2 flex items-center gap-2">
-        <Phone size={20} className="text-orange-500" /> İletişim Bilgileri
-      </h2>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Yetkili Adı Soyadı *</label>
-        <input required name="yetkili" type="text" placeholder="Ad Soyad"
-          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400 transition-colors" />
-      </div>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Telefon *</label>
-        <div className="flex items-center border border-gray-200 rounded-xl px-4 py-3 gap-3 focus-within:border-orange-400 transition-colors">
-          <Phone size={16} className="text-gray-400 shrink-0" />
-          <input required name="telefon" type="tel" placeholder="05XX XXX XX XX" className="flex-1 outline-none text-sm text-gray-800 placeholder-gray-400" />
-        </div>
-      </div>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">E-posta *</label>
-        <div className="flex items-center border border-gray-200 rounded-xl px-4 py-3 gap-3 focus-within:border-orange-400 transition-colors">
-          <Mail size={16} className="text-gray-400 shrink-0" />
-          <input required name="eposta" type="email" placeholder="isletme@mail.com" className="flex-1 outline-none text-sm text-gray-800 placeholder-gray-400" />
-        </div>
-      </div>
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Adres *</label>
-        <div className="flex items-start border border-gray-200 rounded-xl px-4 py-3 gap-3 focus-within:border-orange-400 transition-colors">
-          <MapPin size={16} className="text-gray-400 shrink-0 mt-0.5" />
-          <textarea required name="adres" rows={2} placeholder="Erdek, Balıkesir — cadde/sokak/no"
-            className="flex-1 outline-none text-sm text-gray-800 placeholder-gray-400 resize-none" />
-        </div>
-      </div>
-      <div className="flex gap-3">
-        <button type="button" onClick={onBack}
-          className="flex-1 border border-gray-200 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm">
-          ← Geri
-        </button>
-        <button type="submit"
-          className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-colors text-sm">
-          Devam Et →
-        </button>
-      </div>
-    </form>
-  );
-}
-
-function Step3({ isletmeAdi }: { isletmeAdi: string }) {
-  return (
-    <div className="text-center py-6">
-      <div className="text-7xl mb-4">🎉</div>
-      <h2 className="text-2xl font-black text-gray-900 mb-3">Başvurunuz Alındı!</h2>
-      {isletmeAdi && <p className="text-gray-700 font-semibold mb-2">{isletmeAdi}</p>}
-      <p className="text-gray-500 mb-2 leading-relaxed">
-        ErdekOnline ekibi en geç <strong>24 saat</strong> içinde sizi arayacak.
-      </p>
-      <p className="text-gray-400 text-sm mb-8">
-        Sorular için: <span className="text-sky-600 font-semibold">info@erdekonline.com</span>
-      </p>
-      <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5 mb-8 text-left">
-        <p className="text-sm font-bold text-orange-700 mb-3">🎁 Avantajlarınız:</p>
-        <ul className="space-y-2 text-sm text-gray-600">
-          <li className="flex items-center gap-2"><span className="text-green-500">✓</span> İlk 3 ay komisyon sıfır</li>
-          <li className="flex items-center gap-2"><span className="text-green-500">✓</span> Üretsiz işletme sayfası</li>
-          <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 7/24 teknik destek</li>
-        </ul>
-      </div>
-      <Link href="/" className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3.5 rounded-full transition-colors">
-        Ana Sayfaya Dön
-      </Link>
-    </div>
-  );
-}
+const cats = ["Restoran / Kafe","Market / Bakkal","Tekne Turu","Konaklama / Pansiyon","Yerel Urunler","Kuafor / Guzellik","Eczane","Diger Hizmetler"];
+type S1 = { isletmeAdi:string; kategori:string; aciklama:string; acilis:string; kapanis:string; };
 
 export default function IsletmeKayitPage() {
-  const [step, setStep] = useState(1);
-  // Form verilerini ref ile tutuyoruz (re-render gerektirmiyor)
-  const form = useRef({
-    isletmeAdi: "", kategori: "", aciklama: "", acilis: "09:00", kapanis: "22:00",
-    yetkili: "", telefon: "", eposta: "", adres: "",
-  });
+  const [step,setStep] = useState(1);
+  const [s1,setS1] = useState<S1|null>(null);
+  const [tamam,setTamam] = useState(false);
+  const [catAcik,setCatAcik] = useState(false);
+  const [kat,setKat] = useState("");
 
-  const handleStep1Done = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    form.current.isletmeAdi = fd.get("isletmeAdi") as string;
-    form.current.kategori = fd.get("kategori") as string;
-    form.current.aciklama = fd.get("aciklama") as string;
-    form.current.acilis = fd.get("acilis") as string;
-    form.current.kapanis = fd.get("kapanis") as string;
+  function handleStep1(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); const f=new FormData(e.currentTarget);
+    setS1({ isletmeAdi:f.get("isletmeAdi") as string, kategori:kat, aciklama:f.get("aciklama") as string, acilis:f.get("acilis") as string, kapanis:f.get("kapanis") as string });
     setStep(2);
-  };
+  }
+  function handleStep2(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); if (!s1) return; const f=new FormData(e.currentTarget);
+    basvuruKaydet({ ...s1, yetkili:f.get("yetkili") as string, telefon:f.get("telefon") as string, eposta:f.get("eposta") as string, adres:f.get("adres") as string });
+    setTamam(true);
+  }
 
-  const handleStep2Done = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    form.current.yetkili = fd.get("yetkili") as string;
-    form.current.telefon = fd.get("telefon") as string;
-    form.current.eposta = fd.get("eposta") as string;
-    form.current.adres = fd.get("adres") as string;
-    basvuruKaydet(form.current);
-    setStep(3);
-  };
-
-  return (
-    <main className="min-h-screen bg-gradient-to-br from-orange-50 to-sky-50 flex flex-col">
-      <Navbar />
-      <div className="flex-1 px-4 py-12">
-      <div className="max-w-2xl mx-auto">
-        <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-sky-600 text-sm font-medium mb-6 transition-colors">
-          <ArrowLeft size={16} /> Ana Sayfaya Dön
-        </Link>
-        <div className="bg-gradient-to-r from-orange-500 to-sky-600 rounded-3xl p-8 text-center mb-6 text-white">
-          <Image src="/logo.svg" alt="ErdekOnline" width={64} height={64} className="mx-auto rounded-full mb-3" priority />
-          <h1 className="text-2xl font-black mb-1">İşletmenizi ErdekOnline&apos;a Ekleyin</h1>
-          <p className="text-white/80 text-sm">Erdek&apos;teki müşterilere ulaşın. İlk 3 ay komisyon sıfır!</p>
+  if (tamam) return (
+    <main className="flex flex-col min-h-screen bg-gray-50"><Navbar/>
+      <div className="flex-1 flex items-center justify-center px-4 py-12">
+        <div className="bg-white rounded-3xl shadow-lg p-10 max-w-md w-full text-center">
+          <div className="text-6xl mb-4">🎉</div>
+          <h2 className="text-2xl font-black text-gray-900 mb-3">Basvurunuz Alindi!</h2>
+          <p className="text-gray-500 mb-6">24 saat icerisinde sizi arayacagiz.</p>
+          <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 mb-6 text-left">
+            <p className="text-sm font-semibold text-gray-700">Isletme: <span className="font-bold text-orange-600">{s1?.isletmeAdi}</span></p>
+            <p className="text-sm text-gray-500 mt-1">Kategori: {s1?.kategori}</p>
+          </div>
+          <Link href="/" className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-full inline-block">Ana Sayfaya Don</Link>
         </div>
-        <div className="flex items-center gap-2 mb-8 px-2">
-          {[1, 2, 3].map((s) => (
-            <div key={s} className="flex items-center gap-2 flex-1">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${step >= s ? "bg-orange-500 text-white" : "bg-gray-200 text-gray-400"}`}>{s}</div>
-              <div className={`text-xs font-medium hidden sm:block ${step >= s ? "text-gray-700" : "text-gray-400"}`}>
-                {s === 1 ? "İşletme" : s === 2 ? "İletişim" : "Onay"}
+      </div>
+      <Footer/><WhatsAppButton/>
+    </main>
+  );
+return (
+    <main className="flex flex-col min-h-screen bg-gray-50"><Navbar/>
+      <div className="max-w-2xl mx-auto w-full px-4 py-10 flex-1">
+        <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-sky-600 text-sm mb-6"><ArrowLeft size={16}/> Ana Sayfa</Link>
+        <div className="flex items-center gap-3 mb-8">
+          <Image src="/logo.svg" alt="ErdekOnline" width={48} height={48} className="rounded-full"/>
+          <div><h1 className="text-2xl font-black text-gray-900">Isletme Ol</h1><p className="text-gray-500 text-sm">ErdekOnline&apos;a katil, musterilere ulas</p></div>
+        </div>
+        <div className="flex gap-2 mb-8">
+          {[1,2].map(n=><div key={n} className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold border ${step===n?"bg-orange-500 text-white border-orange-500":step>n?"bg-green-100 text-green-700 border-green-200":"bg-gray-100 text-gray-400 border-gray-200"}`}><span>{step>n?"✓":n}</span>{n===1?"Isletme":"Iletisim"}</div>)}
+        </div>
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+          {step===1 && (
+            <form onSubmit={handleStep1} className="flex flex-col gap-5">
+              <h2 className="text-xl font-black text-gray-900 flex items-center gap-2"><Building2 size={20} className="text-orange-500"/> Isletme Bilgileri</h2>
+              <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Isletme Adi *</label><input required name="isletmeAdi" type="text" placeholder="Ornek: Kalamar Balik" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"/></div>
+              <div className="relative"><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Kategori *</label>
+                <button type="button" onClick={()=>setCatAcik(!catAcik)} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-left flex items-center justify-between">
+                  <span className={kat?"text-gray-800":"text-gray-400"}>{kat||"Kategori secin"}</span><ChevronDown size={16} className={`transition-transform ${catAcik?"rotate-180":""}`}/>
+                </button>
+                {catAcik&&<div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 py-1">{cats.map(c=><button key={c} type="button" onClick={()=>{setKat(c);setCatAcik(false);}} className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 font-medium">{c}</button>)}</div>}
               </div>
-              {s < 3 && <div className={`flex-1 h-0.5 ${step > s ? "bg-orange-400" : "bg-gray-200"}`} />}
-            </div>
-          ))}
-        </div>
-        <div className="bg-white rounded-3xl shadow-xl p-8">
-          {step === 1 && <Step1 onSubmit={handleStep1Done} />}
-          {step === 2 && <Step2 onSubmit={handleStep2Done} onBack={() => setStep(1)} />}
-          {step === 3 && <Step3 isletmeAdi={form.current.isletmeAdi} />}
+              <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Aciklama</label><textarea name="aciklama" rows={3} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400 resize-none"/></div>
+              <div className="grid grid-cols-2 gap-4">
+                <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Acilis</label><input name="acilis" type="time" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"/></div>
+                <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Kapanis</label><input name="kapanis" type="time" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"/></div>
+              </div>
+              <button type="submit" disabled={!kat} className="bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold py-3 rounded-xl mt-2">Devam Et</button>
+            </form>
+          )}
+
+{step===2 && (
+            <form onSubmit={handleStep2} className="flex flex-col gap-5">
+              <h2 className="text-xl font-black text-gray-900 flex items-center gap-2"><Phone size={20} className="text-orange-500"/> Iletisim Bilgileri</h2>
+              <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Yetkili Kisi *</label><input required name="yetkili" type="text" placeholder="Ad Soyad" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-orange-400"/></div>
+              <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Telefon *</label><div className="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 focus-within:border-orange-400"><Phone size={15} className="text-gray-400 shrink-0"/><input required name="telefon" type="tel" placeholder="05xx xxx xxxx" className="flex-1 bg-transparent outline-none text-sm"/></div></div>
+              <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">E-posta</label><div className="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 focus-within:border-orange-400"><Mail size={15} className="text-gray-400 shrink-0"/><input name="eposta" type="email" placeholder="isletme@email.com" className="flex-1 bg-transparent outline-none text-sm"/></div></div>
+              <div><label className="text-sm font-semibold text-gray-700 mb-1.5 block">Adres *</label><div className="flex items-center gap-2 border border-gray-200 rounded-xl px-4 py-3 focus-within:border-orange-400"><MapPin size={15} className="text-gray-400 shrink-0"/><input required name="adres" type="text" placeholder="Cadde / Sokak, Erdek" className="flex-1 bg-transparent outline-none text-sm"/></div></div>
+              <div className="flex gap-3">
+                <button type="button" onClick={()=>setStep(1)} className="flex-1 border border-gray-200 text-gray-600 font-bold py-3 rounded-xl hover:bg-gray-50">Geri</button>
+                <button type="submit" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl">Basvuruyu Gonder</button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
-      </div>
-      <Footer />
-      <WhatsAppButton />
+      <Footer/><WhatsAppButton/>
     </main>
   );
 }

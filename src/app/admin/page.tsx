@@ -6,7 +6,7 @@ import Image from "next/image";
 import { LogOut, RefreshCw, Trash2, Phone, Mail, MapPin, Clock, Tag, User } from "lucide-react";
 import { basvurulariGetir, durumGuncelle, basvuruSil, type Basvuru } from "@/lib/basvurular";
 
-const ADMIN_PIN = process.env.NEXT_PUBLIC_ADMIN_PIN || "erdek2026";
+// PIN dogrulamasi /api/admin-giris endpoint'inde yapiliyor (server-side)
 
 const durumRenk: Record<Basvuru["durum"], string> = {
   yeni: "bg-orange-100 text-orange-700 border-orange-200",
@@ -74,10 +74,25 @@ function BasvuruKart({ b, onRefresh }: { b: Basvuru; onRefresh: () => void }) {
 function GirisEkrani({ onGiris }: { onGiris: () => void }) {
   const [pin, setPin] = useState("");
   const [hata, setHata] = useState(false);
-  const handleGiris = (e: React.FormEvent) => {
+  const [yukleniyor, setYukleniyor] = useState(false);
+  const handleGiris = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (pin === ADMIN_PIN) { onGiris(); }
-    else { setHata(true); setPin(""); }
+    setYukleniyor(true);
+    setHata(false);
+    try {
+      const res = await fetch("/api/admin-giris", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin }),
+      });
+      const data = await res.json();
+      if (data.ok) { onGiris(); }
+      else { setHata(true); setPin(""); }
+    } catch {
+      setHata(true); setPin("");
+    } finally {
+      setYukleniyor(false);
+    }
   };
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center px-4">
@@ -90,7 +105,7 @@ function GirisEkrani({ onGiris }: { onGiris: () => void }) {
             placeholder="PIN girin" maxLength={10}
             className={`w-full border rounded-xl px-4 py-3 text-center text-2xl tracking-[0.5em] outline-none transition-colors ${hata ? "border-red-400 bg-red-50" : "border-gray-200 focus:border-orange-400"}`} />
           {hata && <p className="text-red-500 text-sm font-medium">Hatalı PIN, tekrar deneyin.</p>}
-          <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-colors">Giriş Yap</button>
+          <button type="submit" disabled={yukleniyor} className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold py-3 rounded-xl transition-colors">{yukleniyor ? "Dogrulaniyor..." : "Giris Yap"}</button>
         </form>
         <Link href="/" className="block mt-4 text-xs text-gray-400 hover:text-gray-600">← Ana Sayfaya Dön</Link>
       </div>

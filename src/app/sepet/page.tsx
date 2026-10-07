@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { ShoppingCart, Trash2, Plus, Minus, ArrowLeft, PackageOpen, CheckCircle } from "lucide-react";
+import { sipariisKaydet, eski_siparisleriTasi } from "@/lib/siparis";
 
 interface SepetItem {
   id: number;
@@ -30,6 +31,7 @@ export default function SepetPage() {
   const [adresHata, setAdresHata] = useState("");
 
   useEffect(() => {
+    eski_siparisleriTasi(); // eski format siparisleri yeni formata tasir
     try {
       const raw = localStorage.getItem("eo_sepet");
       if (raw) setItems(JSON.parse(raw));
@@ -54,21 +56,30 @@ export default function SepetPage() {
   function siparisVer() {
     setAdresHata("");
     if (!teslimat.ad.trim() || !teslimat.telefon.trim() || !teslimat.adres.trim()) {
-      setAdresHata("Lütfen ad, telefon ve teslimat adresini doldurun.");
+      setAdresHata("Lutfen ad, telefon ve teslimat adresini doldurun.");
       return;
     }
     try {
-      const mevcutlar = JSON.parse(localStorage.getItem("eo_siparisler") || "[]");
-      const yeniSiparis = {
+      // Aktif kullanici emailini al
+      let kullaniciEmail: string | undefined;
+      try {
+        const k = JSON.parse(localStorage.getItem("eo_aktif_kullanici") || "null");
+        kullaniciEmail = k?.email;
+      } catch { /* */ }
+
+      const urunToplam = items.reduce((acc, i) => acc + i.fiyat * i.adet, 0);
+      const teslimatUcretiHesap = urunToplam >= 300 ? 0 : 25;
+
+      sipariisKaydet({
         id: Date.now().toString(),
         tarih: new Date().toLocaleString("tr-TR"),
-        isletme: items[0]?.isletme || "ErdekOnline",
-        urunler: items.map(i => ({ isim: i.isim, adet: i.adet, fiyat: i.fiyat })),
-        toplam: items.reduce((acc, i) => acc + i.fiyat * i.adet, 0) + (items.reduce((acc, i) => acc + i.fiyat * i.adet, 0) >= 300 ? 0 : 25),
-        durum: "hazirlaniyor" as const,
+        kullaniciEmail,
+        isletmeAdi: items[0]?.isletme || "ErdekOnline",
+        urunler: items.map(i => ({ isim: i.isim, adet: i.adet, fiyat: i.fiyat, emoji: i.emoji })),
+        toplam: urunToplam + teslimatUcretiHesap,
+        durum: "hazirlaniyor",
         teslimat,
-      };
-      localStorage.setItem("eo_siparisler", JSON.stringify([yeniSiparis, ...mevcutlar]));
+      });
     } catch { /* sessiz hata */ }
     save([]);
     setSiparisOnay(true);

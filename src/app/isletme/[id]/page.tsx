@@ -7,12 +7,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { ArrowLeft, Star, Clock, Phone, MapPin, Tag, Heart, Share2, MessageSquare, Send, CheckCircle, Plus } from "lucide-react";
+import { dinamikIsletmeleriGetir, type Isletme } from "@/lib/veri";
+import { yorumlariGetir, yorumEkle, ortalamaHesapla, eskiYorumlariTasi, type Yorum as YorumTip } from "@/lib/yorumlar";
 
-const isletmeler: Record<string, {
-  isim: string; kategori: string; puan: number; sure: string; minSiparis: string;
-  emoji: string; renk: string; adres: string; telefon: string; aciklama: string;
-  etiketler: string[]; menu?: { baslik: string; urunler: { isim: string; fiyat: string; aciklama: string }[] }[];
-}> = {
+// Eski hardcoded veri kaldırıldı — merkezi veri katmanı (lib/veri.ts) kullanılıyor
+const _legacy: Record<string, unknown> = {
   "1": {
     isim: "Kalamar Balık Restaurant", kategori: "Balık & Deniz Ürünleri", puan: 4.9, sure: "25-40 dk",
     minSiparis: "150 TL", emoji: "🐟", renk: "bg-blue-100",
@@ -218,14 +217,22 @@ const isletmeler: Record<string, {
     ]
   },
 };
-interface Yorum { isim: string; puan: number; metin: string; tarih: string; }
+// Yorum tipi artık lib/yorumlar.ts'den geliyor
+
+void _legacy; // kullanılmıyor — silinebilir
 
 export default function IsletmeDetayPage() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : (params.id ?? "");
-  const b = isletmeler[id];
+  const [tumIsletmeler, setTumIsletmeler] = useState<Isletme[]>([]);
+
+  useEffect(() => {
+    setTumIsletmeler(dinamikIsletmeleriGetir());
+  }, []);
+
+  const b = tumIsletmeler.find(i => i.id === Number(id));
   const [favori, setFavori] = useState(false);
-  const [yorumlar, setYorumlar] = useState<Yorum[]>([]);
+  const [yorumlar, setYorumlar] = useState<YorumTip[]>([]);
   const [yorumIsim, setYorumIsim] = useState("");
   const [yorumMetin, setYorumMetin] = useState("");
   const [yorumPuan, setYorumPuan] = useState(5);
@@ -233,16 +240,19 @@ export default function IsletmeDetayPage() {
   const [aktifTab, setAktifTab] = useState<"menu" | "yorumlar">("menu");
 
   useEffect(() => {
-    try {
-      const key = `eo_yorumlar_${id}`;
-      const raw = localStorage.getItem(key);
-      if (raw) setYorumlar(JSON.parse(raw));
-    } catch { setYorumlar([]); }
+    // Eski format yorumları yeni sisteme taşı
+    eskiYorumlariTasi(Number(id));
+    // Yeni paylaşımlı sistemden yükle
+    setYorumlar(yorumlariGetir(Number(id)));
     // Favori durumunu yükle
     try {
       const favs: string[] = JSON.parse(localStorage.getItem("eo_favoriler") || "[]");
       setFavori(favs.includes(id));
     } catch { setFavori(false); }
+    // Yeni yorum eklenince güncelle
+    const handler = () => setYorumlar(yorumlariGetir(Number(id)));
+    window.addEventListener("eo_yorum_eklendi", handler);
+    return () => window.removeEventListener("eo_yorum_eklendi", handler);
   }, [id]);
 
   function sepeteEkle(urunIsim: string, fiyatStr: string) {
@@ -283,15 +293,14 @@ export default function IsletmeDetayPage() {
   function yorumGonder(e: React.FormEvent) {
     e.preventDefault();
     if (!yorumIsim.trim() || !yorumMetin.trim()) return;
-    const yeniYorum: Yorum = {
-      isim: yorumIsim.trim(),
+    // Yeni paylaşımlı yorum sistemi — tüm kullanıcılar görebilir
+    yorumEkle({
+      isletmeId: Number(id),
+      kullaniciAd: yorumIsim.trim(),
       puan: yorumPuan,
-      metin: yorumMetin.trim(),
-      tarih: new Date().toLocaleDateString("tr-TR"),
-    };
-    const updated = [yeniYorum, ...yorumlar];
-    setYorumlar(updated);
-    localStorage.setItem(`eo_yorumlar_${id}`, JSON.stringify(updated));
+      yorum: yorumMetin.trim(),
+    });
+    setYorumlar(yorumlariGetir(Number(id)));
     setYorumIsim(""); setYorumMetin(""); setYorumPuan(5);
     setYorumGonderildi(true);
     setTimeout(() => setYorumGonderildi(false), 3000);
@@ -347,7 +356,7 @@ return (
           <h1 className="text-2xl font-black text-gray-900 mb-1">{b.isim}</h1>
           <p className="text-gray-500 text-sm mb-4">{b.kategori}</p>
           <div className="flex flex-wrap gap-4 mb-4">
-            <div className="flex items-center gap-1 text-sm"><Star size={15} className="text-yellow-400 fill-yellow-400" /><span className="font-bold text-gray-700">{b.puan}</span><span className="text-gray-400 text-xs">({yorumlar.length + 12} yorum)</span></div>
+            <div className="flex items-center gap-1 text-sm"><Star size={15} className="text-yellow-400 fill-yellow-400" /><span className="font-bold text-gray-700">{yorumlar.length > 0 ? ortalamaHesapla(Number(id)) || b.puan : b.puan}</span><span className="text-gray-400 text-xs">({yorumlar.length > 0 ? yorumlar.length : b.puanSayisi} yorum)</span></div>
             <div className="flex items-center gap-1 text-sm text-gray-500"><Clock size={15} />{b.sure}</div>
             <div className="flex items-center gap-1 text-sm text-gray-500"><Tag size={15} />Min: {b.minSiparis}</div>
           </div>
@@ -381,7 +390,7 @@ return (
               </button>
               <button onClick={() => setAktifTab("yorumlar")}
                 className={`flex-1 py-3.5 text-sm font-bold transition-colors flex items-center justify-center gap-1 ${aktifTab === "yorumlar" ? "text-sky-600 border-b-2 border-sky-500" : "text-gray-400 hover:text-gray-600"}`}>
-                <MessageSquare size={14} /> Yorumlar ({yorumlar.length + 12})
+                <MessageSquare size={14} /> Yorumlar ({yorumlar.length > 0 ? yorumlar.length : b.puanSayisi})
               </button>
             </div>
             <div className="p-5">
@@ -440,15 +449,15 @@ return (
                     <p className="text-gray-400 text-sm text-center py-4">Henüz yorum yok. İlk yorumu siz yazın!</p>
                   ) : (
                     yorumlar.map((y, i) => (
-                      <div key={i} className="bg-gray-50 rounded-xl p-4">
+                      <div key={y.id || i} className="bg-gray-50 rounded-xl p-4">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-bold text-gray-900 text-sm">{y.isim}</span>
+                          <span className="font-bold text-gray-900 text-sm">{y.kullaniciAd}</span>
                           <span className="text-gray-400 text-xs">{y.tarih}</span>
                         </div>
                         <div className="flex gap-0.5 mb-2">
                           {[1,2,3,4,5].map(s => <Star key={s} size={13} className={s <= y.puan ? "text-yellow-400 fill-yellow-400" : "text-gray-200"} />)}
                         </div>
-                        <p className="text-gray-600 text-sm">{y.metin}</p>
+                        <p className="text-gray-600 text-sm">{y.yorum}</p>
                       </div>
                     ))
                   )}
