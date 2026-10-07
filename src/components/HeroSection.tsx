@@ -63,9 +63,9 @@ export default function HeroSection() {
               <input type="text" value={search} onChange={e=>setSearch(e.target.value)} onKeyDown={handleKey} placeholder="Restoran, urun veya hizmet ara..." className="flex-1 text-gray-800 placeholder-gray-400 text-base outline-none py-3 bg-transparent"/>
               <button onClick={handleSearch} className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-xl transition-colors text-base shrink-0">Ara</button>
             </div>
-            <div className="flex flex-wrap justify-center gap-2 mt-4">
+            <div className="flex flex-nowrap justify-center gap-2 mt-4 overflow-x-auto pb-1 scrollbar-hide">
               {quickTags.map(tag=>(
-                <button key={tag} onClick={()=>router.push(`/ara?q=${encodeURIComponent(tag)}`)} className="bg-white/20 hover:bg-white/35 text-white text-sm px-4 py-2 rounded-full border border-white/40 transition-colors font-medium">{tag}</button>
+                <button key={tag} onClick={()=>router.push(`/ara?q=${encodeURIComponent(tag)}`)} className="bg-white/20 hover:bg-white/35 text-white text-sm px-4 py-2 rounded-full border border-white/40 transition-colors font-medium shrink-0">{tag}</button>
               ))}
             </div>
           </div>
