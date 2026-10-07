@@ -57,17 +57,17 @@ export default function HeroSection() {
           <p className="text-sky-100 text-lg md:text-xl max-w-2xl leading-relaxed mb-10">
             Yemek siparisinden market alisverisine, tekne turundan konaklama rezervasyonuna — Erdek&apos;in tum hizmetleri artik tek platformda.
           </p>
-          <div className="w-full max-w-2xl mb-6">
+          <div className="w-full max-w-2xl mb-4">
             <div className="flex items-center bg-white rounded-2xl shadow-2xl overflow-hidden p-2 gap-2">
               <Search size={22} className="ml-3 text-gray-400 shrink-0"/>
               <input type="text" value={search} onChange={e=>setSearch(e.target.value)} onKeyDown={handleKey} placeholder="Restoran, urun veya hizmet ara..." className="flex-1 text-gray-800 placeholder-gray-400 text-base outline-none py-3 bg-transparent"/>
               <button onClick={handleSearch} className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-3 rounded-xl transition-colors text-base shrink-0">Ara</button>
             </div>
-            <div className="flex flex-nowrap justify-center gap-2 mt-4 overflow-x-auto pb-1 scrollbar-hide">
-              {quickTags.map(tag=>(
-                <button key={tag} onClick={()=>router.push(`/ara?q=${encodeURIComponent(tag)}`)} className="bg-white/20 hover:bg-white/35 text-white text-sm px-4 py-2 rounded-full border border-white/40 transition-colors font-medium shrink-0">{tag}</button>
-              ))}
-            </div>
+          </div>
+          <div className="w-full max-w-4xl flex flex-wrap justify-center gap-2 mb-6">
+            {quickTags.map(tag=>(
+              <button key={tag} onClick={()=>router.push(`/ara?q=${encodeURIComponent(tag)}`)} className="bg-white/20 hover:bg-white/35 text-white text-sm px-4 py-2 rounded-full border border-white/40 transition-colors font-medium whitespace-nowrap">{tag}</button>
+            ))}
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-2xl mt-4">
             {stats.map(s=>(
