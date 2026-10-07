@@ -104,18 +104,18 @@ function SonucYok({ gecmis, onTemizle, router }: { gecmis: string[]; onTemizle: 
             <h3 className="text-sm font-bold text-gray-700">Son Aramalar</h3>
             <button onClick={onTemizle} className="text-xs text-gray-400 hover:text-red-500">Temizle</button>
           </div>
-          <div className="flex flex-nowrap overflow-x-auto gap-2 pb-1">
+          <div className="flex flex-wrap gap-2">
             {gecmis.map((g, i) => (
-              <button key={i} onClick={() => router.push(`/ara?q=${encodeURIComponent(g)}`)} className="shrink-0 bg-white border border-gray-200 text-gray-600 text-sm px-3 py-1.5 rounded-full hover:bg-orange-50 hover:border-orange-300 font-medium">{g}</button>
+              <button key={i} onClick={() => router.push(`/ara?q=${encodeURIComponent(g)}`)} className="bg-white border border-gray-200 text-gray-600 text-sm px-3 py-1.5 rounded-full hover:bg-orange-50 hover:border-orange-300 font-medium">{g}</button>
             ))}
           </div>
         </div>
       )}
       <div className="mb-8">
         <h3 className="text-sm font-bold text-gray-700 mb-3">Populer Aramalar</h3>
-        <div className="flex flex-nowrap overflow-x-auto gap-2 pb-1">
+        <div className="flex flex-wrap justify-center gap-2">
           {populer.map(tag => (
-            <button key={tag} onClick={() => router.push(`/ara?q=${encodeURIComponent(tag)}`)} className="shrink-0 bg-orange-50 hover:bg-orange-100 text-orange-600 text-sm px-4 py-2 rounded-full font-medium border border-orange-100">{tag}</button>
+            <button key={tag} onClick={() => router.push(`/ara?q=${encodeURIComponent(tag)}`)} className="bg-orange-50 hover:bg-orange-100 text-orange-600 text-sm px-4 py-2 rounded-full font-medium border border-orange-100">{tag}</button>
           ))}
         </div>
       </div>
